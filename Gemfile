@@ -14,6 +14,7 @@ gem "bootstrap-sass", "2.3.2.2"
 gem "sass-rails", "4.0.0"
 
 group :development, :test do
+  gem "faker", "1.2.0"
   gem "sqlite3", "1.3.8"
   gem "pry-rails", "0.3.2"
 end
