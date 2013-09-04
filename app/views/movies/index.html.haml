@@ -1,0 +1,6 @@
+%ul
+  - @movies.each do |movie|
+    %li.movie
+      = link_to movie_path(movie) do
+        %img.small-cover{src: "#{movie.small_cover_url}"}
+        %h4= movie.title

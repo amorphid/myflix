@@ -1,0 +1,10 @@
+.movie {
+  display: inline-block;
+  margin: 10px 10px 10px 10px;
+  max-width: 166px;
+  vertical-align: top;
+}
+
+.small-cover {
+  border-radius: 10px;
+}
