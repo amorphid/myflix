@@ -1,0 +1,14 @@
+.container
+  .row
+    .span7
+      %img.video-cover-large{src: @video.large_cover_url}
+    .span5
+      %h1
+        = @video.title
+      %hr.video-show-divider
+      %p
+        = @video.description
+      %div{class: "btn btn-primary video-show-button"}
+        watch now
+      %div{class: "btn video-show-button"}
+        +my queue

@@ -1,8 +1,0 @@
-.container
-  .row
-    %ul.movie-list
-      - @movies.each do |movie|
-        %li.movie-list-item
-          = link_to movie_path(movie) do
-            %img.movie-cover-small{src: "#{movie.small_cover_url}"}
-            %h4= movie.title

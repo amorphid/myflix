@@ -1,28 +1,28 @@
-.movie-show-divider {
+.video-show-divider {
   background-color: black;
   color: black;
 }
 
-.movie-show-button {
+.video-show-button {
   border-radius: 5px;
 }
 
-.movie-list {
+.video-list {
   text-align: center;
 }
 
 
-.movie-list-item {
+.video-list-item {
   display: inline-block;
   margin: 10px 10px 10px 10px;
   max-width: 166px;
   vertical-align: top;
 }
 
-.movie-cover-large {
+.video-cover-large {
   border-radius: 20px;
 }
 
-.movie-cover-small {
+.video-cover-small {
   border-radius: 10px;
 }
