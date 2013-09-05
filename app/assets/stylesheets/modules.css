@@ -1,10 +1,28 @@
-.movie {
+.movie-show-divider {
+  background-color: black;
+  color: black;
+}
+
+.movie-show-button {
+  border-radius: 5px;
+}
+
+.movie-list {
+  text-align: center;
+}
+
+
+.movie-list-item {
   display: inline-block;
   margin: 10px 10px 10px 10px;
   max-width: 166px;
   vertical-align: top;
 }
 
-.small-cover {
+.movie-cover-large {
+  border-radius: 20px;
+}
+
+.movie-cover-small {
   border-radius: 10px;
 }

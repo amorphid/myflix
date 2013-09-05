@@ -1,0 +1,14 @@
+.container
+  .row
+    .span7
+      %img.movie-cover-large{src: @movie.large_cover_url}
+    .span5
+      %h1
+        = @movie.title
+      %hr.movie-show-divider
+      %p
+        = @movie.description
+      %div{class: "btn btn-primary movie-show-button"}
+        watch now
+      %div{class: "btn movie-show-button"}
+        +my queue
