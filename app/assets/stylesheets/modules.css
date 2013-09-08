@@ -1,3 +1,11 @@
+.header-rounded {
+  border-radius: 15px;
+}
+
+.header-rounded input {
+  border-radius: 15px;
+}
+
 .video-show-divider {
   background-color: black;
   color: black;
@@ -10,7 +18,6 @@
 .video-list {
   text-align: center;
 }
-
 
 .video-list-item {
   display: inline-block;

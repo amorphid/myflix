@@ -1,9 +1,6 @@
 require "spec_helper"
 
 describe Video do
-  let(:params) { {} }
-  let(:all_videos) { Video.all.sort }
-
   it { should have_many(:categories) }
   it { should have_many(:video_categories) }
 
@@ -13,29 +10,30 @@ describe Video do
   it { should validate_presence_of(:large_cover_url) }
 
   context "#search_by_title" do
+    let(:all_videos) { Video.all.sort }
+
     before(:each) do
       create_n_videos(2)
-      set_params_title
     end
 
-    it "shoild find all matching videos" do
+    it "should find all 2 videos" do
+      search_results = video_search("Cool")
       expect(search_results).to eq(all_videos)
     end
+
+    it "should return an empty array if title nonexsistent" do
+      search_results = video_search("Not Cool")
+      expect(search_results).to eq([])
+    end
+
+    it "should return an empty array if title empty" do
+      search_results = video_search("")
+      expect(search_results).to eq([])
+    end
   end
 
-  def create_n_videos(n)
-    2.times { FactoryGirl.create(:video) }
-  end
-
-  def search_results
-    results = Video.search_by_title(params)
+  def video_search(title)
+    results = Video.search_by_title(title)
     results.sort
-  end
-
-  def set_params_title
-    video          = Video.first
-    title          = video.title
-    first_word     = title.split(" ")[0]
-    params[:title] = first_word
   end
 end
