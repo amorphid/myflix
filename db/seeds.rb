@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 categories = Category.create([
-  { title: "New Release" },
+  { title: "Kid Friendly" },
   { title: "Comedy" },
   { title: "Drama" },
   { title: "Science Fiction" }
@@ -72,3 +72,6 @@ Video.all.each do |video|
     VideoCategory.create(category_id: categories.pop.id, video_id: video.id)
   end
 end
+
+# All videos
+FactoryGirl.create(:category_with_videos, title: "All videos")

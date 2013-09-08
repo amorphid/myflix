@@ -21,7 +21,6 @@ group :development, :test do
   gem "sqlite3", "1.3.8"
   gem "pry-rails", "0.3.2"
   gem "rspec-rails", "2.14.0"
-  gem "selenium-webdriver", "2.35.1"
 end
 
 group :doc do

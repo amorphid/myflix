@@ -3,7 +3,7 @@
     %h1
       = category.title
     %ul.video-list
-      -category.videos.each do |video|
+      -category.recent_videos.each do |video|
         %li.video-list-item
           = link_to video_path(video) do
             %img.video-cover-small{src: "#{video.small_cover_url}"}
