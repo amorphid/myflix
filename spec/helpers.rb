@@ -4,7 +4,7 @@ module Helpers
   end
 
   def create_category_with_n_videos(n)
-    create_n_videos(7)
+    create_n_videos(n)
     FactoryGirl.create(:category_with_videos)
   end
 end

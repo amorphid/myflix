@@ -16,17 +16,17 @@ describe Video do
       create_n_videos(2)
     end
 
-    it "should find all 2 videos" do
+    it "should find all matching videos" do
       search_results = video_search("Cool")
       expect(search_results).to eq(all_videos)
     end
 
-    it "should return an empty array if title nonexsistent" do
+    it "returns an empty array if there is no match" do
       search_results = video_search("Not Cool")
       expect(search_results).to eq([])
     end
 
-    it "should return an empty array if title empty" do
+    it "returns an empty array if search string is empty" do
       search_results = video_search("")
       expect(search_results).to eq([])
     end
