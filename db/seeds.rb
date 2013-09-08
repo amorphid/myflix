@@ -15,49 +15,49 @@ categories = Category.create([
 
 videos = Video.create([
   {
-    title: Faker::Lorem.words(rand(1..4)).join(" "),
+    title: "30 Rock",
     description: Faker::Lorem.paragraphs(1).join,
     small_cover_url: "/tmp/30-rock-small.jpg",
     large_cover_url: "/tmp/30-rock-large.jpg"
   },
   {
-    title: Faker::Lorem.words(rand(1..4)).join(" "),
+    title: "Battlestar Galactica",
     description: Faker::Lorem.paragraphs(1).join,
     small_cover_url: "/tmp/battlestar-galactica-small.jpg",
     large_cover_url: "/tmp/battlestar-galactica-large.jpg"
   },
   {
-    title: Faker::Lorem.words(rand(1..4)).join(" "),
+    title: "Power Ranges In Space",
     description: Faker::Lorem.paragraphs(1).join,
     small_cover_url: "/tmp/power-rangers-in-space-small.jpg",
     large_cover_url: "/tmp/power-rangers-in-space-large.jpg"
   },
   {
-    title: Faker::Lorem.words(rand(1..4)).join(" "),
+    title: "Stargate Atlantis",
     description: Faker::Lorem.paragraphs(1).join,
     small_cover_url: "/tmp/stargate-atlantis-small.jpg",
     large_cover_url: "/tmp/stargate-atlantis-large.jpg"
   },
   {
-    title: Faker::Lorem.words(rand(1..4)).join(" "),
+    title: "Stargate SG1",
     description: Faker::Lorem.paragraphs(1).join,
     small_cover_url: "/tmp/stargate-sg1-small.jpg",
     large_cover_url: "/tmp/stargate-sg1-large.jpg"
   },
   {
-    title: Faker::Lorem.words(rand(1..4)).join(" "),
+    title: "Storage Wars",
     description: Faker::Lorem.paragraphs(1).join,
     small_cover_url: "/tmp/storage-wars-small.jpg",
     large_cover_url: "/tmp/storage-wars-large.jpg"
   },
   {
-    title: Faker::Lorem.words(rand(1..4)).join(" "),
+    title: "The Killing",
     description: Faker::Lorem.paragraphs(1).join,
     small_cover_url: "/tmp/the-killing-small.jpg",
     large_cover_url: "/tmp/the-killing-large.jpg"
   },
   {
-    title: Faker::Lorem.words(rand(1..4)).join(" "),
+    title: "The Walking Dead",
     description: Faker::Lorem.paragraphs(1).join,
     small_cover_url: "/tmp/the-walking-dead-small.jpg",
     large_cover_url: "/tmp/the-walking-dead-large.jpg"
