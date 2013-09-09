@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 ruby "2.0.0"
 
+gem "bcrypt-ruby", "3.0.1"
 gem "coffee-rails", "4.0.0"
 gem "haml-rails", "0.4"
 gem "jbuilder", "1.5.1"

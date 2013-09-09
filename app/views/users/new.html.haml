@@ -1,0 +1,33 @@
+%section.register.container
+  .row
+    .span10.offset1
+      .form-horizontal
+        =form_for @user do |i|
+          %header
+            %h1 Register
+            .control-group
+              .control-label
+                = i.label :full_name
+              .controls
+                = i.text_field :full_name
+            .control-group
+              .control-label
+                = i.label :email
+              .controls
+                = i.text_field :email
+            .control-group
+              .control-label
+                = i.label :password
+              .controls
+                = i.text_field :password
+            .control-group
+              .control-label
+                = i.label :password_confirmation
+              .controls
+                = i.text_field :password_confirmation
+            .action
+              .control-group
+                .controls
+                  %input(type="submit" value="Sign Up" class="btn")
+
+
