@@ -83,4 +83,5 @@ Video.all.each do |video|
 end
 
 # All videos
-FactoryGirl.create(:category_with_videos, title: "All videos")
+all_videos_cat = Category.create(title: "All Videos")
+all_videos_cat.videos << Video.all
