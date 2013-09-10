@@ -1,0 +1,16 @@
+%section.sign_in.container
+  .row
+    .span10.offset1
+      .sign_in
+        = form_tag sign_in_path do
+          %header
+            %h1
+              Sign in
+          %p
+            = label_tag :email
+            = text_field_tag :email
+          %p
+            = label_tag :password
+            = password_field_tag :password
+          .action
+            %input(type="submit" value="Sign in" class="btn")

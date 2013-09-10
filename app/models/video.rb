@@ -6,4 +6,12 @@ class Video < ActiveRecord::Base
   validates :description, presence: true
   validates :small_cover_url, presence: true
   validates :large_cover_url, presence: true
+
+  def self.search_by_title(title)
+    unless title.blank?
+      Video.where("title LIKE :title", title: "%" + title + "%")
+    else
+      []
+    end
+  end
 end
