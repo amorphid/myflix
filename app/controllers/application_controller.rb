@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   def authorize
-    redirect_to sign_in_path, alert: "You must be logged in" if current_user.nil?
+    redirect_to root_path, alert: "You must be logged in" if current_user.nil?
   end
 
   def current_user

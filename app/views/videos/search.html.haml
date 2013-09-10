@@ -1,13 +1,7 @@
-- if @videos.count > 0
+- unless @videos.empty?
   %ul.video-list
     - @videos.each do |video|
       %li.video-list-item
         = link_to video_path(video) do
           %img.video-cover-small{src: "#{video.small_cover_url}"}
           %h4= video.title
-- elsif @title.blank?
-  %h1
-    Search string cannot be blank
-- else
-  %h1
-    = "No results for \"#{params[:title]}\""
