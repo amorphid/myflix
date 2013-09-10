@@ -3,7 +3,11 @@ require "spec_helper"
 describe "Search by video title" do
   before(:each) do
     create_n_videos(2)
-    visit root_path
+    user = FactoryGirl.create(:user)
+    visit sign_in_path
+    fill_in "email", with: "mike@mike.mike"
+    fill_in "password", with: "la"
+    click_button "Sign in"
   end
 
   it "should find 2 videos" do
