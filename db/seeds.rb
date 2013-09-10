@@ -64,6 +64,15 @@ videos = Video.create([
   }
 ])
 
+users = User.create([
+  {
+    full_name: "Jorge Muffin Fluffer",
+    email: "a@b.c",
+    password: "la",
+    password_confirmation: "la"
+  }
+])
+
 # Requires videos and categories
 Video.all.each do |video|
   categories = Category.all.shuffle

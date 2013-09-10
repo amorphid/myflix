@@ -1,11 +1,20 @@
 Myflix::Application.routes.draw do
   get 'ui(/:action)', controller: 'ui'
 
-  root to: "videos#index"
-
   resources :videos do
     get "search", on: :collection
   end
 
   resources :users
+
+  delete "/sign_out", to: "sessions#destroy"
+
+  get "/home", to: "videos#index"
+  get "/sign_in", to: "sessions#new"
+  get "/sign_up", to: "users#new"
+  get "/sign_out", to: "sessions#destroy"
+
+  post "/sign_in", to: "sessions#create"
+
+  root to: "static_pages#front"
 end
