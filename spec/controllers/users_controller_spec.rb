@@ -15,42 +15,26 @@ describe UsersController do
     end
 
     it "creates the user with valid input" do
-      user = Fabricate.build(:user)
-      post :create, user: { full_name:            user.full_name,
-                            email:                 user.email,
-                            password:              user.password,
-                            password_confirmation: user.password_confirmation }
-
-      expect(User.last.email).to eq(user.email)
+      user_attr = Fabricate.attributes_for(:user)
+      post :create, user: user_attr
+      expect(User.last.email).to eq(user_attr[:email])
     end
 
     it "redirects to sign_in_path with valid input" do
-      user = Fabricate.build(:user)
-      post :create, user: { full_name:             user.full_name,
-                            email:                 user.email,
-                            password:              user.password,
-                            password_confirmation: user.password_confirmation }
-
+      post :create, user: Fabricate.attributes_for(:user)
       expect(response).to redirect_to sign_in_path
     end
 
-    it "does not create user with duplicate email address" do
-      existing_user = Fabricate(:user)
-      new_user      = Fabricate.build(:user)
-      post :create, user: { full_name:             new_user.full_name,
-                            email:                 existing_user.email,
-                            password:              new_user.password,
-                            password_confirmation: new_user.password_confirmation }
+    it "will reject duplicate email address & not save user" do
+      post :create, user: Fabricate.attributes_for(:user)
+      expect(User.count).to eq(1)
 
-      expect(response).to render_template :new
+      post :create, user: Fabricate.attributes_for(:user, email: User.last)
+      expect(User.count).to eq(1)
     end
 
-    it "does not create user with invalit input (such as missing email)" do
-      new_user      = Fabricate.build(:user)
-      post :create, user: { full_name:             new_user.full_name,
-                            password:              new_user.password,
-                            password_confirmation: new_user.password_confirmation }
-
+    it "renders new template with invalit input (such as missing email)" do
+      post :create, user: Fabricate.attributes_for(:user, email: "")
       expect(response).to render_template :new
     end
   end
