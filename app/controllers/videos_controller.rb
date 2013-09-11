@@ -12,7 +12,7 @@ class VideosController < ApplicationController
     if title.empty?
       flash[:error] = "Please enter 1 or more characters.  Previous search contained 0 characters."
     elsif @videos.empty?
-      flash[:error] = "No results for search \"#{@title}\""
+      flash[:error] = "No results for search \"#{title}\""
     end
   end
 
