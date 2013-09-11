@@ -20,7 +20,7 @@
       = form_for [@video, @review] do |i|
         %fieldset
           = i.label :rating, "Rate this video"
-          = i.select :rating, options_for_select([["5 star", "5"],["4 star", "4"],["3 star", "3"],["2 star", "2"],["1 star", "1"]])
+          = i.select :rating, options_for_select([["5 stars", "5"],["4 stars", "4"],["3 stars", "3"],["2 stars", "2"],["1 stars", "1"]])
           = i.label :description, "Write Review"
           = i.text_area :description, class: "span6", rows: "6"
         %fieldset.actions.clearfix
@@ -28,7 +28,7 @@
           = link_to "Cancel", video_path(@video)
       %header
         %h3
-          = "User Reviews (" + current_user.comments.count.to_s + ")"
+          = "User Reviews (" + current_user.reviews.count.to_s + ")"
 
 
 
@@ -37,22 +37,6 @@
 %section.reviews.container
   .row
     .span10.offset1
-      %form
-        %fieldset
-          %label Rate this video
-          %select(name="")
-            %option(value="5") 5 Stars
-            %option(value="4") 4 Stars
-            %option(value="3") 3 Stars
-            %option(value="2") 2 Stars
-            %option(value="1") 1 Star
-          %label Write Review
-          %textarea.span6(name="" rows="6")
-        %fieldset.actions.clearfix
-          %input(type="submit" value="Submit" class="btn")
-          %a(href="") Cancel
-      %header
-        %h3 User Reviews (253)
       %ul
         - 8.times do
           %article.review
