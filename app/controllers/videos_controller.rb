@@ -17,8 +17,8 @@ class VideosController < ApplicationController
   end
 
   def show
-    @video    = Video.find(params[:id])
-    @comment  = Comment.new
-    @comments = Comment.where(video_id: @video.id)
+    @video   = Video.find(params[:id])
+    @review  = Review.new
+    @reviews = Review.where(video_id: @video.id)
   end
 end

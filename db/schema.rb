@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20130911185830) do
     t.datetime "updated_at"
   end
 
-  create_table "comments", force: true do |t|
+  create_table "reviews", force: true do |t|
     t.integer  "user_id"
     t.integer  "video_id"
     t.string   "description"
