@@ -6,10 +6,10 @@ class VideosController < ApplicationController
   end
 
   def search
-    @title  = params[:title]
-    @videos = Video.search_by_title(@title)
+    title = params[:title]
+    @videos = Video.search_by_title(title)
 
-    if @title.empty?
+    if title.empty?
       flash[:error] = "Please enter 1 or more characters.  Previous search contained 0 characters."
     elsif @videos.empty?
       flash[:error] = "No results for search \"#{@title}\""

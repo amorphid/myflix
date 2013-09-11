@@ -17,13 +17,6 @@ describe VideosController do
   end
 
   context "POST search" do
-    it "sets @title for authenticated users" do
-      session[:user_id] = Fabricate(:user).id
-      title = Faker::Lorem.words(2).join(" ")
-      post :search, title: title
-      expect(assigns(:title)).to eq(title)
-    end
-
     it "sets @videos for authenticated users" do
       session[:user_id] = Fabricate(:user).id
       title = Faker::Lorem.words(2).join(" ")
