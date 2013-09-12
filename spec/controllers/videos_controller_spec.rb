@@ -39,6 +39,21 @@ describe VideosController do
       expect(assigns(:video)).to eq(video)
     end
 
+    it "sets @review for authenticated Users" do
+      session[:user_id] = Fabricate(:user).id
+      video = Fabricate(:video)
+      get :show, id: video.id
+      expect(assigns(:review)).to be_a(Review)
+    end
+
+    it "sets @reviews for authenticated Users" do
+      session[:user_id] = Fabricate(:user).id
+      video = Fabricate(:video)
+      video.reviews << Fabricate.times(2, :review, video_id: video.id, user_id: User.last.id)
+      get :show, id: video.id
+      expect(assigns(:reviews)).to eq(video.reviews.reverse)
+    end
+
     it "redirects to root_path for unauthenticaed users" do
       get :show, id: rand(9999999999)
       expect(response).to redirect_to root_path

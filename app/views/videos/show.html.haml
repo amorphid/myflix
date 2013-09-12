@@ -30,11 +30,12 @@
         %h3
           = "User Reviews (" + @video.reviews.count.to_s + ")"
       %ul
-        - @video.reviews.each do |review|
+        - @reviews.each do |review|
           %article.review
             %li.row
               .span2
-                %span Rating: 5 / 5
+                %span
+                  = review.rating
                 %p
                   by
                   = link_to review.user.full_name, ""
