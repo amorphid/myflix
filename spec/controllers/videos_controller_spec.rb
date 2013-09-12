@@ -32,11 +32,17 @@ describe VideosController do
   end
 
   context "GET show" do
-    it "sets @video for authenticated users" do
+    it "redirects to root_path for unauthenticaed users" do
+      get :show, id: rand(9999999999)
+      expect(response).to redirect_to root_path
+    end
+
+    it "sets @average_rating for authenticated Users" do
       session[:user_id] = Fabricate(:user).id
       video = Fabricate(:video)
+      Fabricate.times(2, :review, user_id: User.last.id, video_id: video.id)
       get :show, id: video.id
-      expect(assigns(:video)).to eq(video)
+      expect(assigns(:average_rating)).to eq(video.average_rating(video.review_ratings_as_array))
     end
 
     it "sets @review for authenticated Users" do
@@ -54,9 +60,13 @@ describe VideosController do
       expect(assigns(:reviews)).to eq(video.reviews.reverse)
     end
 
-    it "redirects to root_path for unauthenticaed users" do
-      get :show, id: rand(9999999999)
-      expect(response).to redirect_to root_path
+    it "sets @video for authenticated users" do
+      session[:user_id] = Fabricate(:user).id
+      video = Fabricate(:video)
+      get :show, id: video.id
+      expect(assigns(:video)).to eq(video)
     end
+
+
   end
 end

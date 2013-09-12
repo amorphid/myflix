@@ -7,9 +7,9 @@ class ReviewsController < ApplicationController
     review.video_id = params[:video_id]
 
     if review.save
-      redirect_to video_path(review.video), flash: { success: "Review created successfully"}
+      redirect_to video_path(review.video), flash: { success: "Thank you for reviewing this video!"}
     else
-      redirect_to video_path(review.video), flash: { error: "Invalid rating and/or description" }
+      redirect_to video_path(review.video), flash: { error: "Description may not be blank " }
     end
   end
 

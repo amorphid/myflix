@@ -18,6 +18,7 @@ class VideosController < ApplicationController
 
   def show
     @video   = Video.find(params[:id])
+    @average_rating = @video.average_rating(@video.review_ratings_as_array)
     @review  = Review.new
     @reviews = Review.where(video_id: @video.id).order("created_at DESC")
   end
