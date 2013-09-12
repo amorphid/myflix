@@ -36,7 +36,7 @@
             %li.row
               .span2
                 %span
-                  = review.rating
+                  = "Rating: " + review.rating.to_s + " / 5"
                 %p
                   by
                   = link_to review.user.full_name, ""
