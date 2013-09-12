@@ -1,10 +1,11 @@
 - @categories.each do |category|
   - if category.videos.count > 0
-    %h1
-      = category.title
-    %ul.video-list
-      -category.recent_videos.each do |video|
-        %li.video-list-item
-          = link_to video_path(video) do
-            %img.video-cover-small{src: "#{video.small_cover_url}"}
-            %h4= video.title
+    %article.video_category
+      %header
+        %h3
+          = category.title
+        .videos.row
+          -category.recent_videos.each do |video|
+            .video.span2
+              = link_to video_path(video) do
+                %img(src="#{video.small_cover_url}")

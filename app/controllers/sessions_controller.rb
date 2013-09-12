@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
 
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to videos_path, flash: { success: "You have successfully logged in" }
+      redirect_to home_path, flash: { success: "You have successfully logged in" }
     else
       redirect_to sign_in_path, flash: { error: "Invalid username and/or password" }
     end

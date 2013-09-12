@@ -7,10 +7,11 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 categories = Category.create([
-  { title: "Kid Friendly" },
+  { title: "Action" },
   { title: "Comedy" },
   { title: "Drama" },
-  { title: "Science Fiction" }
+  { title: "Kids" },
+  { title: "Science Fiction"}
 ])
 
 videos = Video.create([
@@ -73,15 +74,28 @@ users = User.create([
   }
 ])
 
-# Requires videos and categories
-Video.all.each do |video|
-  categories = Category.all.shuffle
-
-  (rand(3) + 1).times do
-    VideoCategory.create(category_id: categories.pop.id, video_id: video.id)
+# randomly assign movies to catgories
+categories.each do |category|
+  videos.each do |video|
+    coin_flip = rand(2)
+    if coin_flip == 1 then
+      VideoCategory.create(category_id: category.id, video_id: video.id)
+    end
   end
 end
 
-# All videos
+# # All videos category (has all videos!)
 all_videos_cat = Category.create(title: "All Videos")
-all_videos_cat.videos << Video.all
+all_videos_cat.videos << videos
+
+# 5 reviews per user per video
+videos.each do |video|
+  users.each do |user|
+    5.times do
+      Review.create(description: Faker::Lorem.paragraph(10),
+                    rating:      rand(1..5),
+                    user_id:     user.id,
+                    video_id:    video.id)
+    end
+  end
+end

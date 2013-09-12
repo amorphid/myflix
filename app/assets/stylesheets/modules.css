@@ -5,31 +5,3 @@
 .header-rounded input {
   border-radius: 15px;
 }
-
-.video-show-divider {
-  background-color: black;
-  color: black;
-}
-
-.video-show-button {
-  border-radius: 5px;
-}
-
-.video-list {
-  text-align: center;
-}
-
-.video-list-item {
-  display: inline-block;
-  margin: 10px 10px 10px 10px;
-  max-width: 166px;
-  vertical-align: top;
-}
-
-.video-cover-large {
-  border-radius: 20px;
-}
-
-.video-cover-small {
-  border-radius: 10px;
-}

@@ -26,15 +26,15 @@ describe "Search by video title" do
     end
 
     click_button "search"
-    expect(page.body).to have_content("Search string cannot be blank")
+    expect(page.body).to have_content("Please enter 1 or more characters.  Previous search contained 0 characters.")
   end
 
-  it "it should say there are no results for that search" do
+  it "should say there are no results for that search" do
     within("#header-search-bar") do
       fill_in "title", with: "not cool"
     end
 
     click_button "search"
-    expect(page.body).to have_content("No results for \"not cool\"")
+    expect(page.body).to have_content("No results for search \"not cool\"")
   end
 end
