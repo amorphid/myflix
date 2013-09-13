@@ -99,3 +99,6 @@ videos.each do |video|
     end
   end
 end
+
+# All videos per user
+users.each { |i| i.videos << videos }
