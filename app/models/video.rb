@@ -3,7 +3,6 @@ class Video < ActiveRecord::Base
   has_many :queued_videos
   has_many :reviews
   has_many :video_categories
-  has_many :users, through: :queued_videos
 
   validates :title, presence: true
   validates :description, presence: true

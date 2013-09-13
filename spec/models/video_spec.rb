@@ -4,7 +4,6 @@ describe Video do
   it { should have_many(:categories) }
   it { should have_many(:queued_videos) }
   it { should have_many(:reviews) }
-  it { should have_many(:users).through(:queued_videos) }
   it { should have_many(:video_categories) }
 
   it { should validate_presence_of(:title) }
