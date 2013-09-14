@@ -3,8 +3,17 @@ require "spec_helper"
 describe Video do
   it { should have_many(:categories) }
   it { should have_many(:queued_videos) }
-  it { should have_many(:reviews) }
   it { should have_many(:video_categories) }
+
+  # couldn't get this test to work:
+  # it { should have_many(:reviews).order("reviews.created_at DESC") }
+  # so I used this instead
+  it "should have many reviews sorted by created_at in descending order" do
+    video = Fabricate(:video)
+    Fabricate.times(2, :review, user: Fabricate(:user), video: video)
+    reviews = video.reviews
+    expect(video.reviews).to eq(video.reviews.sort_by { |i| i.created_at }.reverse)
+  end
 
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:description) }
@@ -37,13 +46,13 @@ describe Video do
       expect(video.review_ratings_as_array).to eq([])
     end
 
-    it "should return [1, 3, 5]" do
+    it "should return an array containing 1, 3, and 5" do
       user  = Fabricate(:user)
       video = Fabricate(:video)
       video.reviews << Fabricate(:review, rating: 1, user_id: user.id, video_id: video.id)
       video.reviews << Fabricate(:review, rating: 3, user_id: user.id, video_id: video.id)
       video.reviews << Fabricate(:review, rating: 5, user_id: user.id, video_id: video.id)
-      expect(video.review_ratings_as_array).to eq([1, 3, 5])
+      expect(video.review_ratings_as_array).to match_array([1, 3, 5])
     end
   end
 

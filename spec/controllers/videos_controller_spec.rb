@@ -57,7 +57,7 @@ describe VideosController do
       video = Fabricate(:video)
       video.reviews << Fabricate.times(2, :review, video_id: video.id, user_id: User.last.id)
       get :show, id: video.id
-      expect(assigns(:reviews)).to eq(video.reviews.reverse)
+      expect(assigns(:reviews)).to eq(video.reviews)
     end
 
     it "sets @video for authenticated users" do

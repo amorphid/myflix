@@ -20,6 +20,6 @@ class VideosController < ApplicationController
     @video   = Video.find(params[:id])
     @average_rating = @video.average_rating(@video.review_ratings_as_array)
     @review  = Review.new
-    @reviews = Review.where(video_id: @video.id).order("created_at DESC")
+    @reviews = @video.reviews
   end
 end

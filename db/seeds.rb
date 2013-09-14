@@ -101,4 +101,4 @@ videos.each do |video|
 end
 
 # All videos per user
-users.each { |i| i.videos << videos }
+users.each { |i| i.videos << videos[0,4] }
