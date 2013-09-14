@@ -11,7 +11,7 @@ describe Video do
   it "should have many reviews sorted by created_at in descending order" do
     video = Fabricate(:video)
     Fabricate.times(2, :review, user: Fabricate(:user), video: video)
-    reviews = video.reviews
+    # reviews = video.reviews
     expect(video.reviews).to eq(video.reviews.sort_by { |i| i.created_at }.reverse)
   end
 
