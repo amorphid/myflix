@@ -32,6 +32,6 @@
                 %td
                   = link_to "TV Shows"
                 %td
-                  = link_to "", method: :post do
+                  = link_to create_or_destroy_queued_video_path(video_id: video.id), method: :post do
                     %i.icon-remove
         = button_to "Update Instant Queue", nil, class: "btn"

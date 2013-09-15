@@ -1,7 +1,6 @@
 Myflix::Application.routes.draw do
   get 'ui(/:action)', controller: 'ui'
 
-  resources :queued_videos, only: [:create]
   resources :users,         only: [:create, :new]
 
   resources   :videos,  only: [:index, :show] do
@@ -21,6 +20,7 @@ Myflix::Application.routes.draw do
   get "/sign_out", to: "sessions#destroy"
 
   post "/sign_in", to: "sessions#create"
+  post "/create_or_destroy_queued_video", to: "queued_videos#create_or_destroy"
 
   root to: "static_pages#front"
 end
