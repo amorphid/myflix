@@ -9,7 +9,7 @@ class Video < ActiveRecord::Base
   validates :small_cover_url, presence: true
   validates :large_cover_url, presence: true
 
-  def average_rating(ratings)
+  def average_rating(ratings = review_ratings_as_array)
     unless ratings.empty?
       sum = ratings.inject(:+)
       average = sum.to_f / ratings.count
@@ -17,6 +17,10 @@ class Video < ActiveRecord::Base
     else
       0.0
     end
+  end
+
+  def in_queue?(user)
+    QueuedVideo.exists?(user_id: user.id, video_id: self.id) ? true : false
   end
 
   def review_ratings_as_array

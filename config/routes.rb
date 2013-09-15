@@ -1,7 +1,7 @@
 Myflix::Application.routes.draw do
   get 'ui(/:action)', controller: 'ui'
 
-  resources :queued_videos, only: [:create, :new]
+  resources :queued_videos, only: [:create]
   resources :users,         only: [:create, :new]
 
   resources   :videos,  only: [:index, :show] do

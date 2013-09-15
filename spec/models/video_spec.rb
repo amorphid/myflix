@@ -4,14 +4,11 @@ describe Video do
   it { should have_many(:categories) }
   it { should have_many(:queued_videos) }
   it { should have_many(:video_categories) }
+  it { should have_many(:reviews) }
 
-  # couldn't get this test to work:
-  # it { should have_many(:reviews).order("reviews.created_at DESC") }
-  # so I used this instead
   it "should have many reviews sorted by created_at in descending order" do
     video = Fabricate(:video)
     Fabricate.times(2, :review, user: Fabricate(:user), video: video)
-    # reviews = video.reviews
     expect(video.reviews).to eq(video.reviews.sort_by { |i| i.created_at }.reverse)
   end
 
@@ -21,22 +18,35 @@ describe Video do
   it { should validate_presence_of(:large_cover_url) }
 
   context "#average_rating" do
+    subject(:video) { Fabricate(:video) }
+
     it "should return an average of 0.0" do
-      video = Fabricate(:video)
-      ratings = []
-      expect(video.average_rating(ratings)).to eq(0.0)
+      empty_ratings = []
+      expect(video.average_rating(empty_ratings)).to eq(0.0)
     end
 
     it "should return an average of 3.0" do
-      video = Fabricate(:video)
-      ratings = [1, 3, 5]
-      expect(video.average_rating(ratings)).to eq(3.0)
+      all_ratings = [1, 3, 5]
+      expect(video.average_rating(all_ratings)).to eq(3.0)
     end
 
     it "should return an average of 2.7" do
-      video = Fabricate(:video)
-      ratings = [1, 3, 4]
-      expect(video.average_rating(ratings)).to eq(2.7)
+      all_ratings = [1, 3, 4]
+      expect(video.average_rating(all_ratings)).to eq(2.7)
+    end
+  end
+
+  describe "#in_queue?" do
+    let(:user)  { Fabricate(:user)  }
+    let(:video) { Fabricate(:video) }
+
+    it "returns true if video in queue" do
+      Fabricate(:queued_video, user_id: user.id, video_id: video.id)
+      expect(video.in_queue?(user)).to eq(true)
+    end
+
+    it "returns false if video not in queue" do
+      expect(video.in_queue?(user)).to eq(false)
     end
   end
 
