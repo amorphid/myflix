@@ -1,16 +1,16 @@
 require "spec_helper"
 
 describe UsersController do
-  context "GET new" do
+  describe "GET new" do
     it "sets @user" do
       get :new
       expect(assigns(:user)).to be_a(User)
     end
   end
 
-  context "POST create" do
+  describe "POST create" do
     it "sets @User" do
-      post :create, user: {}
+      post :create, user: ""
       expect(assigns(:user)).to be_instance_of(User)
     end
 
