@@ -7,7 +7,7 @@ describe QueuedVideosController do
       let(:video) { Fabricate(:video) }
 
       before do
-        @request.env["HTTP_REFERER"] = "http://test.com/referring_url"
+        request.env["HTTP_REFERER"] = "http://test.com/referring_url"
         session[:user_id] = user.id
       end
 
@@ -16,7 +16,7 @@ describe QueuedVideosController do
         expect(QueuedVideo.count).to eq(1)
       end
 
-      it "redirects to @request.referrer w/ unique inputs" do
+      it "redirects to request.referrer w/ unique inputs" do
         post :create_or_destroy, video_id: video.id
         expect(response).to redirect_to @request.referrer
       end
@@ -27,10 +27,10 @@ describe QueuedVideosController do
         expect(QueuedVideo.count).to eq(0)
       end
 
-      it "redirects to @request.referrer w/ duplicate inputs" do
+      it "redirects to request.referrer w/ duplicate inputs" do
         Fabricate(:queued_video, user_id: user.id, video_id: video.id)
         post :create_or_destroy, video_id: video.id
-        expect(response).to redirect_to @request.referrer
+        expect(response).to redirect_to request.referrer
       end
     end
 
@@ -42,7 +42,7 @@ describe QueuedVideosController do
     end
   end
 
-  context "GET index" do
+  describe "GET index" do
     it "sets @videos for authenticated users" do
       videos = Fabricate(:user).videos << Fabricate.times(2, :video)
       session[:user_id] = User.last.id
