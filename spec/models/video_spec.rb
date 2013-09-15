@@ -3,9 +3,12 @@ require "spec_helper"
 describe Video do
   it { should have_many(:categories) }
   it { should have_many(:queued_videos) }
-  it { should have_many(:video_categories) }
   it { should have_many(:reviews) }
+  it { should have_many(:video_categories) }
 
+  # tried testing reviews via the follouwing shoulda test
+  # it { should have_many(:reviews).order("created_at DESC") }
+  # but it doesn's appear to work in Rails 4, so using this instead:
   it "should have many reviews sorted by created_at in descending order" do
     video = Fabricate(:video)
     Fabricate.times(2, :review, user: Fabricate(:user), video: video)
@@ -18,21 +21,25 @@ describe Video do
   it { should validate_presence_of(:large_cover_url) }
 
   context "#average_rating" do
-    subject(:video) { Fabricate(:video) }
+    let(:user)  { Fabricate(:user)  }
+    let(:video) { Fabricate(:video) }
 
     it "should return an average of 0.0" do
-      empty_ratings = []
-      expect(video.average_rating(empty_ratings)).to eq(0.0)
+      expect(video.average_rating).to eq(0.0)
     end
 
     it "should return an average of 3.0" do
-      all_ratings = [1, 3, 5]
-      expect(video.average_rating(all_ratings)).to eq(3.0)
+      Fabricate(:review, rating: 1, user_id: user.id, video_id: video.id)
+      Fabricate(:review, rating: 3, user_id: user.id, video_id: video.id)
+      Fabricate(:review, rating: 5, user_id: user.id, video_id: video.id)
+      expect(video.average_rating).to eq(3.0)
     end
 
     it "should return an average of 2.7" do
-      all_ratings = [1, 3, 4]
-      expect(video.average_rating(all_ratings)).to eq(2.7)
+      Fabricate(:review, rating: 1, user_id: user.id, video_id: video.id)
+      Fabricate(:review, rating: 3, user_id: user.id, video_id: video.id)
+      Fabricate(:review, rating: 4, user_id: user.id, video_id: video.id)
+      expect(video.average_rating).to eq(2.7)
     end
   end
 
@@ -50,47 +57,21 @@ describe Video do
     end
   end
 
-  context "#review_ratings_as_array" do
-    it "should return an empty array" do
-      video = Fabricate(:video)
-      expect(video.review_ratings_as_array).to eq([])
-    end
-
-    it "should return an array containing 1, 3, and 5" do
-      user  = Fabricate(:user)
-      video = Fabricate(:video)
-      video.reviews << Fabricate(:review, rating: 1, user_id: user.id, video_id: video.id)
-      video.reviews << Fabricate(:review, rating: 3, user_id: user.id, video_id: video.id)
-      video.reviews << Fabricate(:review, rating: 5, user_id: user.id, video_id: video.id)
-      expect(video.review_ratings_as_array).to match_array([1, 3, 5])
-    end
-  end
-
   context "#self.search_by_title" do
-    let(:all_videos) { Video.all.sort }
-
-    before(:each) do
-      create_n_videos(2)
-    end
-
     it "should find all matching videos" do
-      search_results = video_search("Cool")
-      expect(search_results).to eq(all_videos)
+      video1 = Fabricate(:video, title: "star trek")
+      video2 = Fabricate(:video, title: "star wars")
+      video3 = Fabricate(:video, title: "gremlins")
+      expect(Video.search_by_title("star")).to match_array([video1, video2])
     end
 
     it "returns an empty array if there is no match" do
-      search_results = video_search("Not Cool")
-      expect(search_results).to eq([])
+      Fabricate(:video, title: "abc")
+      expect(Video.search_by_title("123")).to eq([])
     end
 
     it "returns an empty array if search string is empty" do
-      search_results = video_search("")
-      expect(search_results).to eq([])
+      expect(Video.search_by_title("")).to eq([])
     end
-  end
-
-  def video_search(title)
-    results = Video.search_by_title(title)
-    results.sort
   end
 end
