@@ -18,6 +18,9 @@ class VideosController < ApplicationController
 
   def show
     @video   = Video.find(params[:id])
-    @review  = Review.new
+
+    if @video.in_queue?(current_user)
+      @queued_video = QueuedVideo.find_by(user_id: current_user.id, video_id: @video.id)
+    end
   end
 end

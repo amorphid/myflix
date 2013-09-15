@@ -13,15 +13,15 @@
           = @video.description
         .actions
           %a.btn.btn-primary(href="") Watch Now
-          - unless @video.in_queue?(current_user)
-            = link_to "+ My Queue", create_or_destroy_queued_video_path(video_id: @video.id), class: "btn", method: :post
+          - if @video.in_queue?(current_user)
+            = link_to "- My Queue", video_queued_video_path(@video, @queued_video), class: "btn", method: :delete
           - else
-            = link_to "- My Queue", create_or_destroy_queued_video_path(video_id: @video.id), class: "btn", method: :post
+            = link_to "+ My Queue", video_queued_videos_path(@video), class: "btn", method: :post
 
 %section.reviews.container
   .row
     .span10.offset1
-      = form_for [@video, @review] do |i|
+      = form_for [@video, Review.new] do |i|
         %fieldset
           = i.label :rating, "Rate this video"
           = i.select :rating, options_for_select([["5 stars", "5"],["4 stars", "4"],["3 stars", "3"],["2 stars", "2"],["1 stars", "1"]])

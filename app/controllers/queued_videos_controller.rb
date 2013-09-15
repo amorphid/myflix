@@ -1,23 +1,25 @@
 class QueuedVideosController < ApplicationController
   before_filter :authorize
 
-  def create_or_destroy
-    video = Video.find(params[:video_id])
-    queued_video = QueuedVideo.find_or_initialize_by(
-                    user_id: current_user.id, video_id: video.id)
+  before_action :set_video, only: [:create, :destroy]
 
-    if queued_video.new_record?
-      queued_video.save
-      redirect_to :back, flash: {
-        success: video.title + " successfully added to your queue" }
-    else
-      queued_video.destroy
-      redirect_to :back, flash: {
-        success: video.title + " successfully removed frmo your queue" }
-    end
+  def create
+    QueuedVideo.create(user_id: current_user.id, video_id: @video.id)
+    redirect_to :back, flash: { success: @video.title + " successfully added to your queue" }
+  end
+
+  def destroy
+
+    queued_video = QueuedVideo.find_by(user_id: current_user.id, video_id: @video.id)
+    queued_video.destroy
+    redirect_to :back, flash: { success: @video.title + " successfully removed frmo your queue" }
   end
 
   def index
     @videos = current_user.videos
+  end
+
+  def set_video
+    @video = Video.find(params[:video_id])
   end
 end
