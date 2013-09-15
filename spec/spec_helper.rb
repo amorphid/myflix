@@ -3,7 +3,6 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require "capybara/rspec"
-require "./spec/helpers.rb"
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
@@ -14,7 +13,4 @@ RSpec.configure do |c|
   c.use_transactional_fixtures = true
   c.infer_base_class_for_anonymous_controllers = false
   c.order = "random"
-
-  # customer helpers
-  c.include Helpers
 end
