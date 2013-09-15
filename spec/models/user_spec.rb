@@ -10,7 +10,7 @@ describe User do
   it { should validate_presence_of(:password_digest) }
 
   it do
-    FactoryGirl.create(:user)
+    Fabricate(:user)
     should validate_uniqueness_of(:email)
   end
 end
