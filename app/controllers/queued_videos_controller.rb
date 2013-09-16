@@ -11,7 +11,7 @@ class QueuedVideosController < ApplicationController
   def destroy
     queued_video = QueuedVideo.find_by(user_id: current_user.id, video_id: @video.id)
     queued_video.destroy
-    redirect_to :back, flash: { success: @video.title + " successfully removed frmo your queue" }
+    redirect_to :back, flash: { success: @video.title + " successfully removed from your queue" }
   end
 
   def index
