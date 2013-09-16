@@ -10,7 +10,7 @@ describe UsersController do
 
   describe "POST create" do
     it "sets @User" do
-      post :create, user: ""
+      post :create, user: {}
       expect(assigns(:user)).to be_instance_of(User)
     end
 
