@@ -14,8 +14,14 @@ class QueuedVideosController < ApplicationController
   end
 
   def index
-    @videos = current_user.videos
+    @queued_videos = current_user.queued_videos
   end
+
+  def update_all
+    binding.pry
+  end
+
+private
 
   def set_video
     @video = Video.find(params[:video_id])

@@ -102,3 +102,4 @@ end
 
 # All videos per user
 users.each { |i| i.videos << videos[0,4] }
+users.each { |user| user.queued_videos.each { |i| i.priority = i.id; i.save } }
