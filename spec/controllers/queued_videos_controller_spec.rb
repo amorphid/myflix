@@ -33,9 +33,11 @@ describe QueuedVideosController do
 
   describe "GET index" do
     it "sets @videos for authenticated users" do
-      videos = Fabricate(:user).videos << Fabricate.times(2, :video)
-      queued_videos = User.last.queued_videos
-      session[:user_id] = User.last.id
+      session[:user_id] = Fabricate(:user).id
+      Fabricate(:queued_video, user_id: User.last.id, video_id: Fabricate(:video).id)
+      Fabricate(:queued_video, user_id: User.last.id, video_id: Fabricate(:video).id)
+      queued_videos = QueuedVideo.all
+      binding.pry
       get :index
       expect(assigns(:queued_videos)).to match_array(queued_videos)
     end

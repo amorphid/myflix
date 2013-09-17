@@ -4,7 +4,7 @@ class QueuedVideosController < ApplicationController
   before_action :set_video, only: [:create, :destroy]
 
   def create
-    QueuedVideo.create(user_id: current_user.id, video_id: @video.id)
+    QueuedVideo.create(user_id: current_user.id, video_id: @video.id, priority: QueuedVideo.count + 1)
     redirect_to :back, flash: { success: @video.title + " successfully added to your queue" }
   end
 
