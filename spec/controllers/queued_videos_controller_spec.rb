@@ -74,25 +74,39 @@ describe QueuedVideosController do
   end
 
   describe "POST update_all" do
-    context "user signed in" do
+    context "signed in" do
       let(:queued_video_1) { Fabricate(:queued_video, priority: 1) }
       let(:queued_video_2) { Fabricate(:queued_video, priority: 2) }
-      let(:queued_video_3) { Fabricate(:queued_video, priority: 3) }
 
       before do
         session[:user_id] = Fabricate(:user).id
       end
 
-      it "updates all videos by priority" do
-        params_for_post = { queued_video_1: { id: queued_video_1.id, priority: 3 },
-                            queued_video_2: { id: queued_video_2.id, priority: 2 },
-                            queued_video_3: { id: queued_video_3.id, priority: 1 } }
+      it "updates priority for all videos" do
+        params_for_post = { queued_video_1: { id: queued_video_1.id, priority: 2 },
+                            queued_video_2: { id: queued_video_2.id, priority: 1 } }
 
         post :update_all, queued_videos: params_for_post
 
-        expect(QueuedVideo.find(queued_video_1.id).priority).to eq (3)
-        expect(QueuedVideo.find(queued_video_2.id).priority).to eq (2)
-        expect(QueuedVideo.find(queued_video_3.id).priority).to eq (1)
+        expect(QueuedVideo.find(queued_video_1.id).priority).to eq (2)
+        expect(QueuedVideo.find(queued_video_2.id).priority).to eq (1)
+      end
+
+      it "saves sets queued_videos priority to the appropriate number" do
+        params_for_post = { queued_video_1: { id: queued_video_1.id, priority: 22 },
+                            queued_video_2: { id: queued_video_2.id, priority: 11 } }
+
+        post :update_all, queued_videos: params_for_post
+
+        expect(QueuedVideo.find(queued_video_1.id).priority).to eq (2)
+        expect(QueuedVideo.find(queued_video_2.id).priority).to eq (1)
+      end
+    end
+
+    context "not signed in" do
+      it "redirects to root_path" do
+        post :create, video_id: Fabricate(:video).id
+        expect(response).to redirect_to root_path
       end
     end
   end

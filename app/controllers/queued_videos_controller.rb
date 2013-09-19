@@ -18,21 +18,36 @@ class QueuedVideosController < ApplicationController
   end
 
   def update_all
-    params_queued_videos = params[:queued_videos].values
+    set_count
+    params_queued_videos = params[:queued_videos].values.sort_by { |i| i[:priority] }
 
-    params_queued_videos.each do |params_queued_video|
-      queued_video = QueuedVideo.find(params_queued_video[:id])
-      queued_video.priority = params_queued_video[:priority]
-      queued_video.save!
+    begin
+      QueuedVideo.transaction do
+        params_queued_videos.each do |params_queued_video|
+          queued_video = QueuedVideo.find(params_queued_video[:id])
+          queued_video.priority = count_plus_one
+          queued_video.save
+        end
+      end
+
+      redirect_to my_queue_path, flash: { success: "Queue successfully updated" }
+    rescue
+      redirect_to my_queue_path, flash: { error: "Please only enter positive integers for video priorities" }
     end
-
-    redirect_to my_queue_path, flash: { success: "Queue successfully updated" }
   end
 
 private
 
+  def count_plus_one
+    @count += 1
+  end
+
   def queued_video_count_plus_1
     current_user.queued_videos.count + 1
+  end
+
+  def set_count
+    @count = 0
   end
 
   def set_video
