@@ -100,6 +100,12 @@ videos.each do |video|
   end
 end
 
-# All videos per user
-users.each { |i| i.videos << videos[0,4] }
-users.each { |user| user.queued_videos.each { |i| i.priority = i.id; i.save } }
+# 5 QueuedVideo per User
+# Since Video ID is unique integer, using that for priority
+videos.each do |video|
+  users.each do |user|
+    QueuedVideo.create(
+      priority: video.id, user_id: user.id, video_id: video.id)
+  end
+end
+

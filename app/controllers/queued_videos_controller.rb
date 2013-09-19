@@ -4,7 +4,7 @@ class QueuedVideosController < ApplicationController
   before_action :set_video, only: [:create, :destroy]
 
   def create
-    QueuedVideo.create(user_id: current_user.id, video_id: @video.id, priority: QueuedVideo.count + 1)
+    QueuedVideo.create(user_id: current_user.id, video_id: @video.id, priority: queued_video_count_plus_1)
     redirect_to :back, flash: { success: @video.title + " successfully added to your queue" }
   end
 
@@ -14,14 +14,26 @@ class QueuedVideosController < ApplicationController
   end
 
   def index
-    @queued_videos = current_user.queued_videos
+    @queued_videos = current_user.prioritized_queued_videos
   end
 
   def update_all
-    binding.pry
+    params_queued_videos = params[:queued_videos].values
+
+    params_queued_videos.each do |params_queued_video|
+      queued_video = QueuedVideo.find(params_queued_video[:id])
+      queued_video.priority = params_queued_video[:priority]
+      queued_video.save!
+    end
+
+    redirect_to my_queue_path, flash: { success: "Queue successfully updated" }
   end
 
 private
+
+  def queued_video_count_plus_1
+    current_user.queued_video.count + 1
+  end
 
   def set_video
     @video = Video.find(params[:video_id])
