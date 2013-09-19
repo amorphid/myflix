@@ -19,7 +19,7 @@ class QueuedVideosController < ApplicationController
 
   def update_all
     params_queued_video = params[:queued_videos]
-    update = UpdatePritotyForEachQueuedVideo.new(params_queued_video)
+    update = UpdatePriorityForEachQueuedVideo.new(params_queued_video)
 
     if update.success?
       redirect_to my_queue_path, flash: { success: "Queue successfully updated" }
