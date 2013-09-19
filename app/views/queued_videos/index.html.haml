@@ -19,8 +19,8 @@
                 - @queued_videos.each do |queued_video|
                   %tr
                     %td
-                      %input(name="queued_videos[queued_video_#{queued_video.id}][id]" type="hidden" value="#{queued_video.id}")
-                      %input(name="queued_videos[queued_video_#{queued_video.id}][priority]" type="text" value="#{queued_video.priority}")
+                      %input(name="queued_videos[][id]" type="hidden" value="#{queued_video.id}")
+                      %input(name="queued_videos[][priority]" type="text" value="#{queued_video.priority}")
                     %td
                       = link_to queued_video.video.title, video_path(queued_video.video)
                     %td

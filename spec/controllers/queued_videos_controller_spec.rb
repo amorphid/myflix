@@ -83,8 +83,9 @@ describe QueuedVideosController do
       end
 
       it "updates priority for all videos" do
-        params_for_post = { queued_video_1: { id: queued_video_1.id, priority: 2 },
-                            queued_video_2: { id: queued_video_2.id, priority: 1 } }
+        params_for_post = [ { id: queued_video_1.id, priority: 2 },
+                            { id: queued_video_2.id, priority: 1 } ]
+
 
         post :update_all, queued_videos: params_for_post
 
@@ -93,8 +94,8 @@ describe QueuedVideosController do
       end
 
       it "saves sets queued_videos priority to the appropriate number" do
-        params_for_post = { queued_video_1: { id: queued_video_1.id, priority: 22 },
-                            queued_video_2: { id: queued_video_2.id, priority: 11 } }
+        params_for_post = [ { id: queued_video_1.id, priority: 22 },
+                            { id: queued_video_2.id, priority: 11 } ]
 
         post :update_all, queued_videos: params_for_post
 
