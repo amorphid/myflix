@@ -34,7 +34,7 @@ describe QueuedVideosController do
   describe "GET index" do
     it "sets @videos for authenticated users" do
       session[:user_id] = Fabricate(:user).id
-      queued_videos = Fabricate.times(2, :queued_video_with_1_user)
+      queued_videos = Fabricate.times(2, :queued_video)
       get :index
       expect(assigns(:queued_videos)).to match_array(queued_videos)
     end
@@ -47,12 +47,11 @@ describe QueuedVideosController do
 
   describe "POST create" do
     context "for an authenticated user" do
-      let(:user)  { Fabricate(:user)  }
       let(:video) { Fabricate(:video) }
 
       before do
         request.env["HTTP_REFERER"] = "http://test.com/referring_url"
-        session[:user_id] = user.id
+        session[:user_id] = Fabricate(:user).id
       end
 
       it "creates a queued video" do

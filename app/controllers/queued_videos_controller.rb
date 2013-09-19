@@ -32,7 +32,7 @@ class QueuedVideosController < ApplicationController
 private
 
   def queued_video_count_plus_1
-    current_user.queued_video.count + 1
+    current_user.queued_videos.count + 1
   end
 
   def set_video
