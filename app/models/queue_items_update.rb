@@ -25,14 +25,9 @@ class QueueItemsUpdate
 
   def sanitize_user_input(queued_videos_data = queued_videos_data)
     please_no_nils = queued_videos_data.map do |i|
-                       case i[:priority]
-                       when /\d+/        then i # positive inteer
-                       when /-\d+/       then i # negative integer
-                       when /\d+[.]\d+/  then i # positive float
-                       when /-\d+[.]\d+/ then i # positive float
-                       else nil
-                       end
-                     end
+      i if i[:priority].to_i.to_s == i[:priority] ||
+           i[:priority].to_f.to_s == i[:priority]
+   end
 
     if please_no_nils.include? nil
       @error = "For video priorities, integers and floats only pleae."
