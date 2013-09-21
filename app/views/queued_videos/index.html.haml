@@ -16,17 +16,18 @@
                   %th(width="15%") Genre
                   %th(width="15%") Remove
               %tbody
-                - @queued_videos.each do |queued_video|
+                - @queued_videos.each_with_index do |queued_video, index|
+
                   %tr
                     %td
                       %input(name="queued_videos[][id]" type="hidden" value="#{queued_video.id}")
-                      %input(name="queued_videos[][priority]" type="text" value="#{queued_video.priority}")
+                      %input(name="queued_videos[][priority]" type="text" value="#{queued_video.priority}" tabindex="#{increment_tabindex_by_one}")
                     %td
                       = link_to queued_video.video.title, video_path(queued_video.video)
                     %td
                       = button_to "Play", nil, class: "btn"
                     %td
-                      %select(name="")
+                      %select(name="" tabindex="#{increment_tabindex_by_one}")
                         %option(value="5") 5 Stars
                         %option(value="4") 4 Stars
                         %option(value="3") 3 Stars
@@ -37,4 +38,4 @@
                     %td
                       = link_to video_queued_video_path(queued_video.video, queued_video), method: :delete do
                         %i.icon-remove
-            = i.submit
+            = i.submit "Update Queue", tabindex: increment_tabindex_by_one
