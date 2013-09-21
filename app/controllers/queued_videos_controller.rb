@@ -18,13 +18,12 @@ class QueuedVideosController < ApplicationController
   end
 
   def update_all
-    params_queued_video = params[:queued_videos]
-    update = UpdatePriorityForEachQueuedVideo.new(params_queued_video)
+    update = QueueItemsUpdate.new(params[:queued_videos])
 
-    if update.success?
+    unless update.error?
       redirect_to my_queue_path, flash: { success: "Queue successfully updated" }
     else
-      redirect_to my_queue_path, flash: { error: "Please only enter positive integers for video priorities" }
+      redirect_to my_queue_path, flash: { error: update.error }
     end
   end
 

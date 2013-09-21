@@ -85,10 +85,7 @@ describe QueuedVideosController do
       it "updates priority for all videos" do
         params_for_post = [ { id: queued_video_1.id, priority: 2 },
                             { id: queued_video_2.id, priority: 1 } ]
-
-
         post :update_all, queued_videos: params_for_post
-
         expect(QueuedVideo.find(queued_video_1.id).priority).to eq (2)
         expect(QueuedVideo.find(queued_video_2.id).priority).to eq (1)
       end
@@ -96,11 +93,21 @@ describe QueuedVideosController do
       it "saves sets queued_videos priority to the appropriate number" do
         params_for_post = [ { id: queued_video_1.id, priority: 22 },
                             { id: queued_video_2.id, priority: 11 } ]
-
         post :update_all, queued_videos: params_for_post
-
         expect(QueuedVideo.find(queued_video_1.id).priority).to eq (2)
         expect(QueuedVideo.find(queued_video_2.id).priority).to eq (1)
+      end
+
+      it "redirects to my_queue_path with valid input" do
+        params_for_post = [ { id: queued_video_1.id, priority: 2 },
+                            { id: queued_video_2.id, priority: 1 } ]
+        post :update_all, queued_videos: params_for_post
+        expect(response).to redirect_to my_queue_path
+      end
+
+      it "redirects to my_queue_path with invalid input" do
+        post :update_all, queued_videos: []
+        expect(response).to redirect_to my_queue_path
       end
     end
 
