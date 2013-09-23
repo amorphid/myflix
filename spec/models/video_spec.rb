@@ -6,6 +6,11 @@ describe Video do
   it { should have_many(:reviews) }
   it { should have_many(:video_categories) }
 
+  it { should validate_presence_of(:title) }
+  it { should validate_presence_of(:description) }
+  it { should validate_presence_of(:small_cover_url) }
+  it { should validate_presence_of(:large_cover_url) }
+
   # tried testing reviews via the follouwing shoulda test
   # it { should have_many(:reviews).order("created_at DESC") }
   # but it doesn's appear to work in Rails 4, so using this instead:
@@ -14,11 +19,6 @@ describe Video do
     Fabricate.times(2, :review, user: Fabricate(:user), video: video)
     expect(video.reviews).to eq(video.reviews.sort_by { |i| i.created_at }.reverse)
   end
-
-  it { should validate_presence_of(:title) }
-  it { should validate_presence_of(:description) }
-  it { should validate_presence_of(:small_cover_url) }
-  it { should validate_presence_of(:large_cover_url) }
 
   context "#average_rating" do
     let(:user)  { Fabricate(:user)  }

@@ -3,35 +3,45 @@
     .span10.offset1
       %article
         %header
-          %h2 My Queue
-        %table.table
-          %thead
-            %tr
-              %th(width="10%") List Order
-              %th(width="30%") Video Title
-              %th(width="10%") Play
-              %th(width="20%") Rating
-              %th(width="15%") Genre
-              %th(width="15%") Remove
-          %tbody
-            - @videos.each do |video|
-              %tr
-                %td
-                  %input(type="text" value="1")
-                %td
-                  = link_to video.title, video_path(video)
-                %td
-                  = button_to "Play", nil, class: "btn"
-                %td
-                  %select(name="")
-                    %option(value="5") 5 Stars
-                    %option(value="4") 4 Stars
-                    %option(value="3") 3 Stars
-                    %option(value="2") 2 Stars
-                    %option(value="1") 1 Star
-                %td
-                  = link_to "TV Shows"
-                %td
-                  = link_to create_or_destroy_queued_video_path(video_id: video.id), method: :post do
-                    %i.icon-remove
-        = button_to "Update Instant Queue", nil, class: "btn"
+          %h2
+            My Queue
+          =form_for my_queue_path do |i|
+            %table.table
+              %thead
+                %tr
+                  %th(width="10%") List Order
+                  %th(width="30%") Video Title
+                  %th(width="10%") Play
+                  %th(width="20%") Rating
+                  %th(width="15%") Genre
+                  %th(width="15%") Remove
+              %tbody
+                - @queued_videos.each do |queued_video|
+                  %tr
+                    %td
+                      %input(name="queued_videos[][id]" type="hidden" value="#{queued_video.id}")
+                      %input(name="queued_videos[][priority]" type="text" value="#{queued_video.priority}" tabindex="#{increment_tabindex_by_one}")
+                    %td
+                      = link_to queued_video.video.title, video_path(queued_video.video)
+                    %td
+                      = button_to "Play", nil, class: "btn"
+                    %td
+                      %input(name="reviews[][video_id]" type="hidden" value="#{queued_video.video_id}")
+                      %select(name="reviews[][rating]" tabindex="#{increment_tabindex_by_one}")
+                        - unless queued_video.review
+                          %option(value="" selected) (Rate me!)
+                          - [5, 4, 3, 2, 1].each do |i|
+                            %option(value="#{i}") #{pluralize(i, 'Star')}
+                        - else
+                          - [5, 4, 3, 2, 1].each do |i|
+                            - if i == queued_video.review.rating
+                              %option(value="#{i}" selected) #{pluralize(i, 'Star')}
+                            - else
+                              %option(value="#{i}") #{pluralize(i, 'Star')}
+                    %td
+                      = link_to "TV Shows"
+                    %td
+                      = link_to video_queued_video_path(queued_video.video, queued_video), method: :delete do
+                        %i.icon-remove
+            = i.submit "Update Queue", tabindex: increment_tabindex_by_one
+

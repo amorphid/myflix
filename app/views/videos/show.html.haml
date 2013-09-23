@@ -14,7 +14,7 @@
         .actions
           %a.btn.btn-primary(href="") Watch Now
           - if @video.in_queue?(current_user)
-            = link_to "- My Queue", video_queued_video_path(@video, @queued_video), class: "btn", method: :delete
+            = link_to "Remove From Queue", video_queued_video_path(@video, @queued_video), class: "btn", method: :delete
           - else
             = link_to "+ My Queue", video_queued_videos_path(@video), class: "btn", method: :post
 

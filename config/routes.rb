@@ -20,7 +20,8 @@ Myflix::Application.routes.draw do
   get "/sign_up",  to: "users#new"
   get "/sign_out", to: "sessions#destroy"
 
-  post "/sign_in", to: "sessions#create"
+  post "/sign_in",  to: "sessions#create"
+  post "/my_queue", to: "queued_videos#update_all"
 
   root to: "static_pages#front"
 end
