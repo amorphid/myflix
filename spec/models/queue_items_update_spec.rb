@@ -1,7 +1,8 @@
 require "spec_helper"
 
 describe QueueItemsUpdate do
-  subject { QueueItemsUpdate.new }
+  let(:user) { User.last }
+  subject { QueueItemsUpdate.new({}, user) }
 
   describe "#error?" do
     it "returns true with an error" do
@@ -64,37 +65,38 @@ describe QueueItemsUpdate do
       expect(QueuedVideo.find(item1.id).priority).to eq(2)
       expect(QueuedVideo.find(item2.id).priority).to eq(1)
     end
-
-    it "does not update any queued vides when inputs invalid" do
-      item1 = Fabricate(:queued_video, priority: 1)
-      item2 = Fabricate(:queued_video, priority: 2)
-      queued_videos_data = [ { id: item1.id, priority: "2" },
-                             { id: item2.id, priority: "bob" } ]
-      expect{subject.update_queued_videos(queued_videos_data)}.to raise_error
-      expect(QueuedVideo.find(item1.id).priority).to eq(1)
-      expect(QueuedVideo.find(item2.id).priority).to eq(2)
-    end
   end
 
-  # describe "#update_reviews" do
-  #   it "updates videos with valid inputs" do
-  #     item1 = Fabricate(:review, priority: 1)
-  #     item2 = Fabricate(:review, priority: 2)
-  #     queued_videos_data = [ { id: item1.id, priority: "2" },
-  #                            { id: item2.id, priority: "1" } ]
-  #     subject.update_queued_videos(queued_videos_data)
-  #     expect(QueuedVideo.find(item1.id).priority).to eq(2)
-  #     expect(QueuedVideo.find(item2.id).priority).to eq(1)
-  #   end
+  describe "#update_reviews" do
+    it "updates reviews with valid inputs" do
+      item1 = Fabricate(:review, rating: 1)
+      item2 = Fabricate(:review, rating: 2)
+      reviews_data = [ { video_id: item1.video_id, rating: "3" },
+                       { video_id: item2.video_id, rating: "4" } ]
+      subject.update_reviews(reviews_data)
+      expect(Review.find(item1.id).rating).to eq(3)
+      expect(Review.find(item2.id).rating).to eq(4)
+    end
 
-  #   it "does not update any queued vides when inputs invalid" do
-  #     item1 = Fabricate(:review, priority: 1)
-  #     queued_videos_data = [ { id: item1.id, priority: "2" },
-  #                            { id: item2.id, priority: "bob" } ]
-  #     expect{subject.update_queued_videos(queued_videos_data)}.to raise_error
-  #     expect(QueuedVideo.find(item1.id).priority).to eq(1)
-  #     expect(QueuedVideo.find(item2.id).priority).to eq(2)
-  #   end
-  # end
+    it "updates reviews with no description" do
+      item1 = Fabricate(:review, rating: 1, description: nil)
+      item2 = Fabricate(:review, rating: 2, description: nil)
+      reviews_data = [ { video_id: item1.video_id, rating: "3" },
+                       { video_id: item2.video_id, rating: "4" } ]
+      subject.update_reviews(reviews_data)
+      expect(Review.find(item1.id).rating).to eq(3)
+      expect(Review.find(item2.id).rating).to eq(4)
+    end
+
+    it "creates reviews for videos that the user hadn't yet reviewed" do
+      Fabricate(:user)
+      item1 = Fabricate(:video)
+      item2 = Fabricate(:video)
+      reviews_data = [ { video_id: item1.id, rating: "3" },
+                       { video_id: item2.id, rating: "4" } ]
+      subject.update_reviews(reviews_data)
+      expect(Review.find(item1.id).rating).to eq(3)
+      expect(Review.find(item2.id).rating).to eq(4)
+    end
+  end
 end
-

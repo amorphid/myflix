@@ -82,7 +82,7 @@ describe QueuedVideosController do
         session[:user_id] = Fabricate(:user).id
       end
 
-      it "updates priority for all videos" do
+      it "updates priority for all queued videos" do
         params_for_post = [ { id: queued_video_1.id, priority: 2 },
                             { id: queued_video_2.id, priority: 1 } ]
         post :update_all, queued_videos: params_for_post
@@ -96,6 +96,14 @@ describe QueuedVideosController do
         post :update_all, queued_videos: params_for_post
         expect(QueuedVideo.find(queued_video_1.id).priority).to eq (2)
         expect(QueuedVideo.find(queued_video_2.id).priority).to eq (1)
+      end
+
+      it "does not update any queued videos when inputs invalid" do
+        params_for_post = [ { id: queued_video_1.id, priority: "bob" },
+                            { id: queued_video_2.id, priority: "susie" } ]
+        post :update_all, queued_videos: params_for_post
+        expect(QueuedVideo.find(queued_video_1.id).priority).to eq (1)
+        expect(QueuedVideo.find(queued_video_2.id).priority).to eq (2)
       end
 
       it "redirects to my_queue_path with valid input" do

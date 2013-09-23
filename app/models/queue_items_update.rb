@@ -4,19 +4,10 @@ class QueueItemsUpdate
               :queued_videos_data,
               :user
 
-  def initialize(params = [], user)
+  def initialize(params = {}, user = nil)
     @queued_videos_data = params[:queued_videos]
     @reviews_data       = params[:reviews]
     @user               = user
-    # binding.pry
-    sanitize_user_input
-
-    if error.blank?
-      sort_by_priority!
-      normalize_priorities!
-      update_queued_videos
-      update_reviews
-    end
   end
 
   def error?(error = error)
@@ -26,6 +17,17 @@ class QueueItemsUpdate
   def normalize_priorities!(priorities = queued_videos_data)
     priorities.each_with_index do | priorities, index |
       priorities[:priority] = index + 1
+    end
+  end
+
+  def run
+    sanitize_user_input
+
+    if error.blank?
+      sort_by_priority!
+      normalize_priorities!
+      update_queued_videos
+      update_reviews if reviews_data
     end
   end
 
@@ -56,7 +58,7 @@ class QueueItemsUpdate
   def update_reviews(reviews_data = reviews_data)
     Review.transaction do
       reviews_data.each do |review_data|
-        review = Review.find_by(user_id: user.id, video_id: review_data[:video_id])
+        review = Review.find_or_initialize_by(user_id: user.id, video_id: review_data[:video_id])
         review.update_attributes!(rating: review_data[:rating])
       end
     end

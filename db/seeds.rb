@@ -71,6 +71,18 @@ users = User.create([
     email: "a@b.c",
     password: "la",
     password_confirmation: "la"
+  },
+  {
+    full_name: Faker::Name.name,
+    email: Faker::Internet.email,
+    password: "la",
+    password_confirmation: "la"
+  },
+  {
+    full_name: Faker::Name.name,
+    email: Faker::Internet.email,
+    password: "la",
+    password_confirmation: "la"
   }
 ])
 
@@ -84,25 +96,24 @@ categories.each do |category|
   end
 end
 
-# # All videos category (has all videos!)
+# All videos category (has all videos!)
 all_videos_cat = Category.create(title: "All Videos")
 all_videos_cat.videos << videos
 
-# 5 reviews per user per video
-videos.each do |video|
+# One movie have no reviews
+# All other movies have one review per user
+videos[0..-2].each do |video|
   users.each do |user|
-    5.times do
-      Review.create(description: Faker::Lorem.paragraph(10),
-                    rating:      rand(1..5),
-                    user_id:     user.id,
-                    video_id:    video.id)
-    end
+    Review.create(description: Faker::Lorem.paragraph(10),
+                  rating:      rand(1..5),
+                  user_id:     user.id,
+                  video_id:    video.id)
   end
 end
 
-# 5 QueuedVideo per User
-# Since Video ID is unique integer, using that for priority
-videos.each do |video|
+# One video is not associated with a queued video
+# All other videos have one queued_video per User
+videos[0..-2].each do |video|
   users.each do |user|
     QueuedVideo.create(
       priority: video.id, user_id: user.id, video_id: video.id)

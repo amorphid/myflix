@@ -19,6 +19,7 @@ class QueuedVideosController < ApplicationController
 
   def update_all
     update = QueueItemsUpdate.new(params, current_user)
+    update.run
 
     unless update.error?
       redirect_to my_queue_path, flash: { success: "Queue successfully updated" }
