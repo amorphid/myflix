@@ -1,15 +1,21 @@
 class QueueItemsUpdate
   attr_reader :error,
-              :queued_videos_data
+              :reviews_data,
+              :queued_videos_data,
+              :user
 
-  def initialize(params_queued_videos = [])
-    @queued_videos_data = params_queued_videos
+  def initialize(params = [], user)
+    @queued_videos_data = params[:queued_videos]
+    @reviews_data       = params[:reviews]
+    @user               = user
+    # binding.pry
     sanitize_user_input
 
     if error.blank?
       sort_by_priority!
       normalize_priorities!
       update_queued_videos
+      update_reviews
     end
   end
 
@@ -43,6 +49,15 @@ class QueueItemsUpdate
       queued_videos_data.each do |queued_video_data|
         queued_video = QueuedVideo.find(queued_video_data[:id])
         queued_video.update_attributes!(priority: queued_video_data[:priority])
+      end
+    end
+  end
+
+  def update_reviews(reviews_data = reviews_data)
+    Review.transaction do
+      reviews_data.each do |review_data|
+        review = Review.find_by(user_id: user.id, video_id: review_data[:video_id])
+        review.update_attributes!(rating: review_data[:rating])
       end
     end
   end

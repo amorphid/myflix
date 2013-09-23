@@ -75,4 +75,26 @@ describe QueueItemsUpdate do
       expect(QueuedVideo.find(item2.id).priority).to eq(2)
     end
   end
+
+  # describe "#update_reviews" do
+  #   it "updates videos with valid inputs" do
+  #     item1 = Fabricate(:review, priority: 1)
+  #     item2 = Fabricate(:review, priority: 2)
+  #     queued_videos_data = [ { id: item1.id, priority: "2" },
+  #                            { id: item2.id, priority: "1" } ]
+  #     subject.update_queued_videos(queued_videos_data)
+  #     expect(QueuedVideo.find(item1.id).priority).to eq(2)
+  #     expect(QueuedVideo.find(item2.id).priority).to eq(1)
+  #   end
+
+  #   it "does not update any queued vides when inputs invalid" do
+  #     item1 = Fabricate(:review, priority: 1)
+  #     queued_videos_data = [ { id: item1.id, priority: "2" },
+  #                            { id: item2.id, priority: "bob" } ]
+  #     expect{subject.update_queued_videos(queued_videos_data)}.to raise_error
+  #     expect(QueuedVideo.find(item1.id).priority).to eq(1)
+  #     expect(QueuedVideo.find(item2.id).priority).to eq(2)
+  #   end
+  # end
 end
+

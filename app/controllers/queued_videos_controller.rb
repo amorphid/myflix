@@ -18,8 +18,7 @@ class QueuedVideosController < ApplicationController
   end
 
   def update_all
-    binding.pry
-    update = QueueItemsUpdate.new(params[:queued_videos])
+    update = QueueItemsUpdate.new(params, current_user)
 
     unless update.error?
       redirect_to my_queue_path, flash: { success: "Queue successfully updated" }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130922002946) do
+ActiveRecord::Schema.define(version: 20130923034225) do
 
   create_table "categories", force: true do |t|
     t.string   "title"
@@ -21,9 +21,8 @@ ActiveRecord::Schema.define(version: 20130922002946) do
 
   create_table "queued_videos", force: true do |t|
     t.integer "user_id"
-    t.integer "video_id"
     t.integer "priority"
-    t.integer "review_id"
+    t.integer "video_id"
   end
 
   create_table "reviews", force: true do |t|
