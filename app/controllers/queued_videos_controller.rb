@@ -1,5 +1,5 @@
 class QueuedVideosController < ApplicationController
-  before_filter :authorize
+  before_action :authorize
 
   before_action :set_video, only: [:create, :destroy]
 
@@ -18,6 +18,7 @@ class QueuedVideosController < ApplicationController
   end
 
   def update_all
+    binding.pry
     update = QueueItemsUpdate.new(params[:queued_videos])
 
     unless update.error?

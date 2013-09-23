@@ -14,27 +14,16 @@ describe QueuedVideo do
     expect(queued_video.save).to eq(false)
   end
 
-  describe "#is_positive_integer?" do
+  describe "#review" do
     let(:queued_video) { Fabricate(:queued_video) }
 
-    it "returns true if positive integer" do
-      queued_video.priority = 3
-      expect(queued_video.priority_is_positive_integer?).to eq(true)
+    it "returns the review with matching user_id and video_id if it exists" do
+      review = Fabricate(:review, user_id: queued_video.user_id, video_id: queued_video.video_id)
+      expect(queued_video.review).to eq(review)
     end
 
-    it "returns false if not an integer" do
-      queued_video.priority = "banana"
-      expect(queued_video.priority_is_positive_integer?).to eq(false)
-    end
-
-    it "returns false if 0" do
-      queued_video.priority = 0
-      expect(queued_video.priority_is_positive_integer?).to eq(false)
-    end
-
-    it "returns false if negative number" do
-      queued_video.priority = -7
-      expect(queued_video.priority_is_positive_integer?).to eq(false)
+    it "returns nil if no review exists" do
+      expect(queued_video.review).to eq(nil)
     end
   end
 end

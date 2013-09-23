@@ -36,7 +36,7 @@ describe QueueItemsUpdate do
                      { priority: "2+2" },
                      { priority: "!@$" } ]
       expect(subject.sanitize_user_input(priorities))
-        .to eq("For video priorities, integers and floats only pleae.")
+        .to eq("For video priorities, integers and floats only please.")
     end
   end
 
