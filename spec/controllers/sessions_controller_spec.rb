@@ -1,34 +1,34 @@
 require "spec_helper"
 
 describe SessionsController do
-  let(:user) { Fabricate(:user) }
 
-  describe "requests for authenticated user" do
-    before { session[:user_id] = user.id }
-
-    context "GET new" do
-      it "should redirect to home_path" do
-        get :new
-        expect(response).to redirect_to home_path
-      end
+  describe "GET new" do
+    it "should redirect to home_path if user signed in" do
+      set_current_user
+      get :new
+      expect(response).to redirect_to home_path
     end
+  end
 
-    context "GET destroy" do
-      it "should redirect to root_path" do
-        get :destroy
-        expect(response).to redirect_to root_path
-      end
+  describe "GET destroy" do
+    it "should redirect to root_path if user signed in" do
+      set_current_user
+      get :destroy
+      expect(response).to redirect_to root_path
     end
+  end
 
-    context "DELETE destroy" do
-      it "should redirect to root_path" do
-        delete :destroy
-        expect(response).to redirect_to root_path
-      end
+  describe "DELETE destroy" do
+    it "should redirect to root_path if user signed in" do
+      set_current_user
+      delete :destroy
+      expect(response).to redirect_to root_path
     end
   end
 
   describe "POST create" do
+    let(:user) { Fabricate(:user) }
+
     it "should redirect to home_path with valid input" do
       post :create, email: user.email, password: user.password
       expect(response).to redirect_to home_path

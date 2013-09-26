@@ -2,32 +2,24 @@ require "spec_helper"
 
 describe QueuedVideosController do
   describe "DELETE destroy" do
-    context "for an authenticated user" do
-      let(:user)          { Fabricate(:user)  }
-      let(:video)         { Fabricate(:video) }
-      let(:queued_video)  { Fabricate(:queued_video, user_id: user.id, video_id: video.id) }
+    let(:queued_video)  { Fabricate(:queued_video, user_id: user.id, video_id: video.id) }
 
-      before do
-        request.env["HTTP_REFERER"] = "http://test.com/referring_url"
-        session[:user_id] = user.id
-      end
-
-      it "destroys a queued video" do
-        delete :destroy, id: queued_video.id, video_id: video.id
-        expect(QueuedVideo.count).to eq(0)
-      end
-
-      it "redirects to request.referrer" do
-        delete :destroy, id: queued_video.id, video_id: video.id
-        expect(response).to redirect_to request.referrer
-      end
+    before do
+      request.env["HTTP_REFERER"] = "http://test.com/referring_url"
     end
 
-    context "for an unauthenticated user" do
-      it "redirects to root_path" do
-        delete :destroy, id: "", video_id: ""
-        expect(response).to redirect_to root_path
-      end
+    it "destroys a queued video" do
+      delete :destroy, id: queued_video.id, video_id: video.id
+      expect(QueuedVideo.count).to eq(0)
+    end
+
+    it "redirects to request.referrer" do
+      delete :destroy, id: queued_video.id, video_id: video.id
+      expect(response).to redirect_to request.referrer
+    end
+
+    it_behaves_like "require_sign_in" do
+      let(:action) { delete :destroy, id: "", video_id: "" }
     end
   end
 
