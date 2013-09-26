@@ -1,7 +1,6 @@
 require "spec_helper"
 
 describe VideosController do
-
   before { set_current_user }
 
   describe "GET index" do

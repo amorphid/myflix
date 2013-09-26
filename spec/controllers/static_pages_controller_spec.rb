@@ -10,7 +10,7 @@ describe StaticPagesController do
 
     it "does not redirect to home page if not signed in" do
       visit root_path
-      expect(current_path).to eq(root_path)
+      expect(response.status).to eq(200)
     end
   end
 end
