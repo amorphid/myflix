@@ -98,5 +98,10 @@ describe QueueItemsUpdate do
       expect(Review.find(item1.id).rating).to eq(3)
       expect(Review.find(item2.id).rating).to eq(4)
     end
+
+    it "does not raise an error if review_data has no rating" do
+      reviews_data = [ { video_id: 1, rating: "" } ]
+      expect(subject.update_reviews(reviews_data)).not_to raise_error
+    end
   end
 end

@@ -58,8 +58,10 @@ class QueueItemsUpdate
   def update_reviews(reviews_data = reviews_data)
     Review.transaction do
       reviews_data.each do |review_data|
-        review = Review.find_or_initialize_by(user_id: user.id, video_id: review_data[:video_id])
-        review.update_attributes!(rating: review_data[:rating])
+        unless review_data[:rating].blank?
+          review = Review.find_or_initialize_by(user_id: user.id, video_id: review_data[:video_id])
+          review.update_attributes!(rating: review_data[:rating])
+        end
       end
     end
   end
