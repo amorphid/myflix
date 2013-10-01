@@ -32,12 +32,18 @@ describe QueueItemsUpdate do
       expect(subject.sanitize_user_input(priorities)).to eq(nil)
     end
 
-    it "returns error message for invalid input" do
+    it "returns error message for invalid priorities" do
       priorities = [ { priority: "bob" },
                      { priority: "2+2" },
                      { priority: "!@$" } ]
       expect(subject.sanitize_user_input(priorities))
-        .to eq("For video priorities, integers and floats only please.")
+        .to eq("For video priorities, integers and floats only please")
+    end
+
+    it "raises an error with no items in queue" do
+      priorities = []
+      expect(subject.sanitize_user_input(priorities))
+        .to eq("No items in queue")
     end
   end
 
@@ -97,6 +103,11 @@ describe QueueItemsUpdate do
       subject.update_reviews(reviews_data)
       expect(Review.find(item1.id).rating).to eq(3)
       expect(Review.find(item2.id).rating).to eq(4)
+    end
+
+    it "does create a review if review has up rating" do
+      reviews_data = [ { video_id: 1, rating: "" } ]
+      expect(Review.count).to eq(0)
     end
   end
 end
