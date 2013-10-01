@@ -1,7 +1,7 @@
 require "spec_helper"
 
 feature "Updating order of items in queue" do
-  before do
+  background do
     sign_in
     Fabricate.times(2, :queued_video)
     visit my_queue_path
