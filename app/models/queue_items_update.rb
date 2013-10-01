@@ -39,7 +39,7 @@ class QueueItemsUpdate
      end
 
       if please_no_nils.include? nil
-        @error = "For video priorities, integers and floats only please."
+        @error = "For video priorities, integers and floats only please"
       end
     else
       @error = "No items in queue"

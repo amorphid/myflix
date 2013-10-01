@@ -37,11 +37,13 @@ describe QueueItemsUpdate do
                      { priority: "2+2" },
                      { priority: "!@$" } ]
       expect(subject.sanitize_user_input(priorities))
-        .to eq("For video priorities, integers and floats only please.")
+        .to eq("For video priorities, integers and floats only please")
     end
 
     it "raises an error with no items in queue" do
-      pending
+      priorities = []
+      expect(subject.sanitize_user_input(priorities))
+        .to eq("No items in queue")
     end
   end
 
@@ -103,9 +105,9 @@ describe QueueItemsUpdate do
       expect(Review.find(item2.id).rating).to eq(4)
     end
 
-    it "does not raise an error if review_data has no rating" do
+    it "does create a review if review has up rating" do
       reviews_data = [ { video_id: 1, rating: "" } ]
-      expect(subject.update_reviews(reviews_data)).not_to raise_error
+      expect(Review.count).to eq(0)
     end
   end
 end
