@@ -17,10 +17,10 @@
                   %th(width="15%") Remove
               %tbody
                 - @queued_videos.each do |queued_video|
-                  %tr
+                  %tr(id="queue_item_#{queued_video.priority}")
                     %td
                       %input(name="queued_videos[][id]" type="hidden" value="#{queued_video.id}")
-                      %input(id="video_#{queued_video.video.id}_priority" name="queued_videos[][priority]" type="text" value="#{queued_video.priority}" tabindex="#{increment_tabindex_by_one}")
+                      %input(id="priority" name="queued_videos[][priority]" type="text" value="#{queued_video.priority}" tabindex="#{increment_tabindex_by_one}")
                     %td
                       = link_to queued_video.video.title, video_path(queued_video.video)
                     %td
