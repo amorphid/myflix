@@ -32,12 +32,16 @@ describe QueueItemsUpdate do
       expect(subject.sanitize_user_input(priorities)).to eq(nil)
     end
 
-    it "returns error message for invalid input" do
+    it "returns error message for invalid priorities" do
       priorities = [ { priority: "bob" },
                      { priority: "2+2" },
                      { priority: "!@$" } ]
       expect(subject.sanitize_user_input(priorities))
         .to eq("For video priorities, integers and floats only please.")
+    end
+
+    it "raises an error with no items in queue" do
+      pending
     end
   end
 

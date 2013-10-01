@@ -32,13 +32,17 @@ class QueueItemsUpdate
   end
 
   def sanitize_user_input(queued_videos_data = queued_videos_data)
-    please_no_nils = queued_videos_data.map do |i|
-      i if i[:priority].to_i.to_s == i[:priority] ||
-           i[:priority].to_f.to_s == i[:priority]
-   end
+    unless queued_videos_data.blank?
+      please_no_nils = queued_videos_data.map do |i|
+        i if i[:priority].to_i.to_s == i[:priority] ||
+             i[:priority].to_f.to_s == i[:priority]
+     end
 
-    if please_no_nils.include? nil
-      @error = "For video priorities, integers and floats only please."
+      if please_no_nils.include? nil
+        @error = "For video priorities, integers and floats only please."
+      end
+    else
+      @error = "No items in queue"
     end
   end
 
