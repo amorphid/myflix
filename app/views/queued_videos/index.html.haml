@@ -20,7 +20,7 @@
                   %tr
                     %td
                       %input(name="queued_videos[][id]" type="hidden" value="#{queued_video.id}")
-                      %input(name="queued_videos[][priority]" type="text" value="#{queued_video.priority}" tabindex="#{increment_tabindex_by_one}")
+                      %input(id="video_#{queued_video.video.id}_priority" name="queued_videos[][priority]" type="text" value="#{queued_video.priority}" tabindex="#{increment_tabindex_by_one}")
                     %td
                       = link_to queued_video.video.title, video_path(queued_video.video)
                     %td
