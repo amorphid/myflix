@@ -70,19 +70,22 @@ users = User.create([
     full_name: "Jorge Muffin Fluffer",
     email: "a@b.c",
     password: "la",
-    password_confirmation: "la"
+    password_confirmation: "la",
+    small_pic_url: "/tmp/jorge-muffin-fluffer-small.jpg"
   },
   {
     full_name: Faker::Name.name,
     email: Faker::Internet.email,
     password: "la",
-    password_confirmation: "la"
+    password_confirmation: "la",
+    small_pic_url: "/tmp/user-small.jpg"
   },
   {
     full_name: Faker::Name.name,
     email: Faker::Internet.email,
     password: "la",
-    password_confirmation: "la"
+    password_confirmation: "la",
+    small_pic_url: "/tmp/user-small.jpg"
   }
 ])
 

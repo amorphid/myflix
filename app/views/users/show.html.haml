@@ -1,0 +1,44 @@
+%section.user.container
+  .row
+    .span10.offset1
+      %article
+        %header
+          %img(src="#{current_user.small_pic_url}")
+          %h2
+            = current_user.full_name + "'s"
+            video collections
+            = "(" + current_user.queued_videos.count.to_s + ")"
+          %button.btn Follow
+        %table.table
+          %thead
+            %tr
+              %th(width="30%") Video Title
+              %th(width="15%") Genre
+          %tbody
+            - current_user.queued_videos.each do |queued_video|
+              %tr
+                %td
+                  = link_to queued_video.video.title, video_path(queued_video.video)
+                %td
+                  = link_to "TV Shows"
+
+%section.user_reviews.container
+  .row
+    .span10.offset1
+      %header
+        %h3
+          = current_user.full_name + "'s"
+          Reviews
+          = "(" + current_user.reviews.count.to_s + ")"
+      %ul
+        - current_user.reviews.each do |review|
+          %article.review
+            %li.row
+              .span2
+                %p
+                  = link_to review.video.title, video_path(review.video)
+                %span
+                  = "Rating: " + review.rating.to_s + " / 5"
+              .span8
+                %p
+                  = review.description
