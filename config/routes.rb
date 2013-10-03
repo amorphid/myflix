@@ -16,6 +16,7 @@ Myflix::Application.routes.draw do
 
   get "/home",     to: "videos#index"
   get "/my_queue", to: "queued_videos#index"
+  get "/people",   to: "users#index"
   get "/sign_in",  to: "sessions#new"
   get "/sign_up",  to: "users#new"
   get "/sign_out", to: "sessions#destroy"

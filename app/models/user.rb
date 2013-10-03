@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
   has_secure_password
 
+  has_one :follower
+
+  has_many :user_followers
   has_many :reviews
   has_many :queued_videos
   has_many :videos, through: :queued_videos

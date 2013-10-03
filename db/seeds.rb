@@ -123,3 +123,8 @@ videos[0..-2].each do |video|
   end
 end
 
+# each follower is following all users
+users.each do |user|
+  Follower.create(user_id: user.id)
+  user.follower.users << users
+end
