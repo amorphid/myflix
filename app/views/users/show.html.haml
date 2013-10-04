@@ -9,9 +9,8 @@
             video collections
             = "(" + @user.queued_videos.count.to_s + ")"
           - if @user_follower
-            %form(action="/followers/#{current_user.follower.id}" method="delete")
-              %input(name="authenticity_token" type="hidden" value="#{form_authenticity_token}")
-              %input(type="hidden" name="user_id" value="#{@user.id}")
+            = form_tag "/followers/#{current_user.follower.id}", method: :delete do
+              = hidden_field_tag :user_id, @user.id
               %button.btn(type="submit")
                 Unfollow
           - else
