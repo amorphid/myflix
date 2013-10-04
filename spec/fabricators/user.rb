@@ -5,4 +5,6 @@ Fabricator(:user) do
   password = Faker::Internet.password
   password              { password }
   password_confirmation { password }
+
+  small_pic_url "/tmp/user-small.jpg"
 end

@@ -1,7 +1,8 @@
 Myflix::Application.routes.draw do
   get 'ui(/:action)', controller: 'ui'
 
-  resources :users,         only: [:create, :new]
+  resources :followers, only: [:create, :destroy]
+  resources :users,     only: [:create, :new, :show]
 
   resources   :videos,  only: [:index, :show] do
     resources :queued_videos, only: [:create, :destroy]
@@ -16,6 +17,7 @@ Myflix::Application.routes.draw do
 
   get "/home",     to: "videos#index"
   get "/my_queue", to: "queued_videos#index"
+  get "/people",   to: "users#index"
   get "/sign_in",  to: "sessions#new"
   get "/sign_up",  to: "users#new"
   get "/sign_out", to: "sessions#destroy"

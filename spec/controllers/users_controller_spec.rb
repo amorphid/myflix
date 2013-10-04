@@ -8,6 +8,15 @@ describe UsersController do
     end
   end
 
+  describe "GET show" do
+    it "sets @user" do
+      set_current_user
+      user = User.last
+      get :show, id: user.id
+      expect(assigns(:user)).to eq(user)
+    end
+  end
+
   describe "POST create" do
     it "sets @User" do
       post :create, user: {}

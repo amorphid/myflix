@@ -10,7 +10,6 @@ describe User do
     expect(User.last.prioritized_queued_videos).to eq(queued_videos.sort_by(&:priority))
   end
 
-
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:full_name) }
   it { should validate_presence_of(:password_digest) }

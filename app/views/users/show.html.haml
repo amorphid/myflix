@@ -1,0 +1,54 @@
+%section.user.container
+  .row
+    .span10.offset1
+      %article
+        %header
+          %img(src="#{@user.small_pic_url}")
+          %h2
+            = @user.full_name + "'s"
+            video collections
+            = "(" + @user.queued_videos.count.to_s + ")"
+          - if @user_follower
+            = form_tag "/followers/#{current_user.follower.id}", method: :delete do
+              = hidden_field_tag :user_id, @user.id
+              %button.btn(type="submit")
+                Unfollow
+          - else
+            %form(action="/followers" method="post")
+              %input(name="authenticity_token" type="hidden" value="#{form_authenticity_token}")
+              %input(type="hidden" name="user_id" value="#{@user.id}")
+              %button.btn(type="submit")
+                Follow
+        %table.table
+          %thead
+            %tr
+              %th(width="30%") Video Title
+              %th(width="15%") Genre
+          %tbody
+            - @user.queued_videos.each do |queued_video|
+              %tr
+                %td
+                  = link_to queued_video.video.title, video_path(queued_video.video)
+                %td
+                  = link_to "TV Shows"
+
+%section.user_reviews.container
+  .row
+    .span10.offset1
+      %header
+        %h3
+          = @user.full_name + "'s"
+          Reviews
+          = "(" + @user.reviews.count.to_s + ")"
+      %ul
+        - @user.reviews.each do |review|
+          %article.review
+            %li.row
+              .span2
+                %p
+                  = link_to review.video.title, video_path(review.video)
+                %span
+                  = "Rating: " + review.rating.to_s + " / 5"
+              .span8
+                %p
+                  = review.description
