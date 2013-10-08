@@ -5,6 +5,7 @@ class UsersController < ApplicationController
     @user = User.new(params_user)
 
     if @user.save
+      AppMailer.send_welcome_on_sign_up(@user).deliver
       redirect_to sign_in_path, flash: { success: "You have successfully signed up" }
     else
       render "new"

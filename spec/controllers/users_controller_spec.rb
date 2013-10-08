@@ -29,6 +29,12 @@ describe UsersController do
       expect(User.last.email).to eq(user_attr[:email])
     end
 
+    it "sends an email to a newly created user" do
+      user_attr = Fabricate.attributes_for(:user)
+      post :create, user: user_attr
+      expect(ActionMailer::Base.deliveries).not_to be_empty
+    end
+
     it "redirects to sign_in_path with valid input" do
       post :create, user: Fabricate.attributes_for(:user)
       expect(response).to redirect_to sign_in_path
