@@ -29,6 +29,12 @@ describe UsersController do
       expect(User.last.email).to eq(user_attr[:email])
     end
 
+    it "generates a password_reset_token" do
+      user_attr = Fabricate.attributes_for(:user)
+      post :create, user: user_attr
+      expect(User.last.password_reset_token.length).to eq(22)
+    end
+
     it "sends an email to a newly created user" do
       user_attr = Fabricate.attributes_for(:user)
       post :create, user: user_attr

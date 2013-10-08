@@ -15,6 +15,7 @@ Myflix::Application.routes.draw do
 
   delete "/sign_out", to: "sessions#destroy"
 
+  get "forgot_password", to: "users#forgot_password"
   get "/home",     to: "videos#index"
   get "/my_queue", to: "queued_videos#index"
   get "/people",   to: "users#index"
@@ -22,6 +23,7 @@ Myflix::Application.routes.draw do
   get "/sign_up",  to: "users#new"
   get "/sign_out", to: "sessions#destroy"
 
+  post "reset_password", to: "users#reset_password"
   post "/sign_in",  to: "sessions#create"
   post "/my_queue", to: "queued_videos#update_all"
 
