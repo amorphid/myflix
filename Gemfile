@@ -18,6 +18,7 @@ gem "sass-rails", "4.0.0"
 
 group :development, :test do
   gem "capybara", "2.1.0"
+  gem "capybara-email", "2.2.0"
   gem "fabrication", "2.8.0"
   gem "launchy", "2.3.0"
   gem "shoulda", "3.5.0"

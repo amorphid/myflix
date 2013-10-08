@@ -21,6 +21,7 @@ class UsersController < ApplicationController
 
   def new
     if current_user
+      @user.password_reset_token = set_password_reset_token
       redirect_to home_path, flash: { alert: "You already have an account" }
     else
       @user = User.new
@@ -28,7 +29,16 @@ class UsersController < ApplicationController
   end
 
   def reset_password
-    binding.pry
+    user = User.find_by(email: params[:email])
+
+    if user
+      user.password_reset_token = set_password_reset_token
+      user.save
+      redirect_to confirm_password_reset_path
+    else
+      flash[:error] = "Invalid email"
+      redirect_to forgot_password_path
+    end
   end
 
   def show

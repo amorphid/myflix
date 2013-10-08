@@ -8,6 +8,33 @@ describe UsersController do
     end
   end
 
+  describe "POST reset_password" do
+    context "with valid email" do
+      let(:user) { Fabricate(:user) }
+
+      it "redirects to confirm password reset page" do
+        post :reset_password, email: user.email
+        expect(response).to redirect_to confirm_password_reset_path
+      end
+
+      it "gives user a new password_reset_token" do
+        token = user.password_reset_token
+        post :reset_password, email: user.email
+        expect(User.last.password_reset_token).not_to eq(token)
+      end
+    end
+
+    it "redirects to sign in page w/ invalid email" do
+      post :reset_password, email: "invalid@email.address"
+      expect(response).to redirect_to forgot_password_path
+    end
+
+    it "redirects to sign in page w/ blank email" do
+      post :reset_password, email: ""
+      expect(response).to redirect_to forgot_password_path
+    end
+  end
+
   describe "GET show" do
     it "sets @user" do
       set_current_user
