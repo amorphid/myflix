@@ -33,4 +33,11 @@ Myflix::Application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+
+  # Set to "true" to prevent need to run "rake assets:precompile"
+  # When performance starts to matter, set back to false and precompile assets
+  config.serve_static_assets = true
+
+  # set this to avoid getting "Missing host to link to!..." error in tests
+  config.action_mailer.default_url_options = { host: ENV["domain"] }
 end
