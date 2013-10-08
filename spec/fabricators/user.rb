@@ -6,5 +6,6 @@ Fabricator(:user) do
   password              { password }
   password_confirmation { password }
 
+  password_reset_token { SecureRandom.urlsafe_base64 }
   small_pic_url "/tmp/user-small.jpg"
 end

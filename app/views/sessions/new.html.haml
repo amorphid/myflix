@@ -13,4 +13,5 @@
             = label_tag :password
             = password_field_tag :password
           .action
-            %input(type="submit" value="Sign in" class="btn")
+            = submit_tag "Sign in"
+            = link_to "Forgot password?", forgot_password_path
