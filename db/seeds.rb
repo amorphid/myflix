@@ -71,6 +71,7 @@ users = User.create([
     email: "a@b.c",
     password: "la",
     password_confirmation: "la",
+    password_reset_token: SecureRandom.urlsafe_base64,
     small_pic_url: "/tmp/jorge-muffin-fluffer-small.jpg"
   },
   {
@@ -78,6 +79,7 @@ users = User.create([
     email: Faker::Internet.email,
     password: "la",
     password_confirmation: "la",
+    password_reset_token: SecureRandom.urlsafe_base64,
     small_pic_url: "/tmp/user-small.jpg"
   },
   {
@@ -85,6 +87,7 @@ users = User.create([
     email: Faker::Internet.email,
     password: "la",
     password_confirmation: "la",
+    password_reset_token: SecureRandom.urlsafe_base64,
     small_pic_url: "/tmp/user-small.jpg"
   }
 ])
