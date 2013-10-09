@@ -5,8 +5,10 @@ class FriendInvitesController < ApplicationController
     unless params[:email].blank?
       @user = User.new(email: params[:email])
       AppMailer.friend_invite(@user).deliver
+      flash[:success] = "Friend invited.  Invite another!"
       redirect_to invite_path
     else
+      flash[:error] = "Email may not be blank"
       redirect_to invite_path
     end
   end
