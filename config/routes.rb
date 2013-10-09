@@ -2,6 +2,7 @@ Myflix::Application.routes.draw do
   get 'ui(/:action)', controller: 'ui'
 
   resources :followers, only: [:create, :destroy]
+  resources :friend_invites, only: [:create, :show, :update]
   resources :users,     only: [:create, :new, :show]
 
   resources   :videos,  only: [:index, :show] do
@@ -18,6 +19,7 @@ Myflix::Application.routes.draw do
   get "/confirm_password_reset", to: "static_pages#confirm_password_reset"
   get "/forgot_password", to: "users#forgot_password"
   get "/home",     to: "videos#index"
+  get "/invite",   to: "friend_invites#new"
   get "/my_queue", to: "queued_videos#index"
   get "/people",   to: "users#index"
   get "/reset_password", to: "users#reset_password"

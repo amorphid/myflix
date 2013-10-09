@@ -1,6 +1,12 @@
 class AppMailer < ActionMailer::Base
   default from: "mpope.cr@gmail.com"
 
+  def friend_invite(user)
+    @user = user
+
+    mail to: @user.email
+  end
+
   def send_welcome_on_sign_up(user)
     @user = user
 
