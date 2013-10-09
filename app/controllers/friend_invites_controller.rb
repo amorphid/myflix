@@ -3,8 +3,8 @@ class FriendInvitesController < ApplicationController
 
   def create
     unless params[:email].blank?
-      @user = User.new(email: params[:email])
-      AppMailer.friend_invite(@user).deliver
+      @user = User.new(email: params[:email], full_name: params[:full_name])
+      AppMailer.friend_invite(@user, params[:invitation_message]).deliver
       flash[:success] = "Friend invited.  Invite another!"
       redirect_to invite_path
     else
@@ -14,13 +14,5 @@ class FriendInvitesController < ApplicationController
   end
 
   def new
-  end
-
-  def show
-    # sign up form for friend
-  end
-
-  def update
-    # process sign up form for friend params
   end
 end
