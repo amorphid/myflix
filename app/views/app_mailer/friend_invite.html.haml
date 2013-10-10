@@ -1,0 +1,19 @@
+!!! 5
+
+%html
+  %body
+  %p
+    - if @user.full_name
+      = "Hey" + @user.full_name + "!"
+    - else
+      = "Hey!"
+  %p
+    - if @invitation_message
+      = @invitation_message
+    - else
+      You've been invited to join MyFlix!
+  %p
+    To join the party, follow
+    = link_to "this link", sign_up_url(email: @user.email, full_name: @user.full_name)
+  %p
+    \-MyFlix

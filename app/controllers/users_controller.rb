@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     if current_user
       redirect_to home_path, flash: { alert: "You already have an account" }
     else
-      @user = User.new
+      @user = User.new(email: params[:email], full_name: params[:full_name])
     end
   end
 
