@@ -24,29 +24,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def reset_password
-    @user = User.find_by(password_reset_token: params[:password_reset_token])
-  end
-
-  def password_reset
-    user = User.find_by(password_reset_token: params[:password_reset_token])
-
-    user.password              = params[:password]
-    user.password_confirmation = params[:password_confirmation]
-    user.password_reset_token  = set_password_reset_token
-
-    if user.save
-      flash[:success] = "Password has been reset & you may login"
-      redirect_to sign_in_path
-    elsif params[:password].length < 1 || params[:password_confirmation].length < 1
-      flash[:error] = "Passwords must be 1 or more characters"
-      redirect_to reset_password_url(password_reset_token: params[:password_reset_token])
-    else
-      flash[:error] = "Passwords must match"
-      redirect_to reset_password_url(password_reset_token: params[:password_reset_token])
-    end
-  end
-
   def show
     @user = User.find(params[:id])
 
