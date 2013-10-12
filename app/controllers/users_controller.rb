@@ -13,9 +13,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def forgot_password
-  end
-
   def index
   end
 

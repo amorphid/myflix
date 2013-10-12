@@ -17,7 +17,7 @@ Myflix::Application.routes.draw do
   delete "/sign_out", to: "sessions#destroy"
 
   get "/confirm_password_reset", to: "static_pages#confirm_password_reset"
-  get "/forgot_password", to: "users#forgot_password"
+  get "/forgot_password", to: "password_resets#forgot_password"
   get "/home",     to: "videos#index"
   get "/invite",   to: "friend_invites#new"
   get "/my_queue", to: "queued_videos#index"
