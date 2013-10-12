@@ -27,7 +27,7 @@ Myflix::Application.routes.draw do
   get "/sign_up",  to: "users#new"
   get "/sign_out", to: "sessions#destroy"
 
-  post "/request_password_reset", to: "users#request_password_reset"
+  post "/request_password_reset", to: "password_resets#request_password_reset"
   post "/reset_password", to: "users#password_reset"
   post "/sign_in",  to: "sessions#create"
   post "/my_queue", to: "queued_videos#update_all"
