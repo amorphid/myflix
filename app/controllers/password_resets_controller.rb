@@ -1,11 +1,12 @@
 class PasswordResetsController < ApplicationController
-  def forgot_password
+  def new
   end
 
-  def request_password_reset
+  def create
     @user = User.find_by(email: params[:email])
 
     if @user
+      # @user.update_attributes(password_reset_token: set_password_reset_token)
       AppMailer.password_reset(@user).deliver
       redirect_to confirm_password_reset_path
     else
@@ -14,7 +15,7 @@ class PasswordResetsController < ApplicationController
     end
   end
 
-  def password_reset
+  def update
     user = User.find_by(password_reset_token: params[:password_reset_token])
 
     user.password              = params[:password]
@@ -33,7 +34,7 @@ class PasswordResetsController < ApplicationController
     end
   end
 
-  def reset_password
+  def edit
     @user = User.find_by(password_reset_token: params[:password_reset_token])
   end
 

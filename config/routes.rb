@@ -17,18 +17,18 @@ Myflix::Application.routes.draw do
   delete "/sign_out", to: "sessions#destroy"
 
   get "/confirm_password_reset", to: "static_pages#confirm_password_reset"
-  get "/forgot_password", to: "password_resets#forgot_password"
+  get "/forgot_password", to: "password_resets#new"
   get "/home",     to: "videos#index"
   get "/invite",   to: "friend_invites#new"
   get "/my_queue", to: "queued_videos#index"
   get "/people",   to: "users#index"
-  get "/reset_password", to: "password_resets#reset_password"
+  get "/reset_password", to: "password_resets#edit"
   get "/sign_in",  to: "sessions#new"
   get "/sign_up",  to: "users#new"
   get "/sign_out", to: "sessions#destroy"
 
-  post "/request_password_reset", to: "password_resets#request_password_reset"
-  post "/reset_password", to: "password_resets#password_reset"
+  post "/request_password_reset", to: "password_resets#create"
+  post "/reset_password", to: "password_resets#update"
   post "/sign_in",  to: "sessions#create"
   post "/my_queue", to: "queued_videos#update_all"
 
