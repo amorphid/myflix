@@ -11,6 +11,7 @@ gem "jquery-rails", "3.0.4"
 gem "rails", "4.0.0"
 gem "turbolinks", "1.3.0"
 gem "uglifier", "2.2.1"
+gem "unicorn"
 
 # Sidekiq
 gem "sidekiq", "2.15.1"
