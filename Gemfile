@@ -12,6 +12,10 @@ gem "rails", "4.0.0"
 gem "turbolinks", "1.3.0"
 gem "uglifier", "2.2.1"
 
+# Sidekiq
+gem "sidekiq", "2.15.1"
+gem "sinatra", ">= 1.3.0", require: nil
+
 # Twitter Bootstrap
 gem "bootstrap-sass", "2.3.2.2"
 gem "sass-rails", "4.0.0"

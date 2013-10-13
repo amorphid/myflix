@@ -4,7 +4,7 @@ class FriendInvitesController < ApplicationController
   def create
     unless params[:email].blank?
       @user = User.new(email: params[:email], full_name: params[:full_name])
-      AppMailer.friend_invite(@user, params[:invitation_message]).deliver
+      AppMailer.delay.friend_invite(@user, params[:invitation_message])
       flash[:success] = "Friend invited.  Invite another!"
       redirect_to invite_path
     else

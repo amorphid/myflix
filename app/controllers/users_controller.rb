@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     @user.password_reset_token = set_password_reset_token
 
     if @user.save
-      AppMailer.send_welcome_on_sign_up(@user).deliver
+      AppMailer.delay.send_welcome_on_sign_up(@user)
       redirect_to sign_in_path, flash: { success: "You have successfully signed up" }
     else
       render "new"
