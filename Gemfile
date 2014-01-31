@@ -14,7 +14,7 @@ gem "unicorn", "4.6.3"
 
 # Sidekiq
 gem "sidekiq", "2.15.1"
-gem "sinatra", ">= 1.3.0", require: nil
+gem "sinatra", ">= 1.3.0"
 
 # Twitter Bootstrap
 gem "bootstrap-sass", "2.3.2.2"
